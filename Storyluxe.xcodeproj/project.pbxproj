@@ -3,27 +3,43 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0BCE5C2E520ABBD9ABB428EC /* Pods_Storyluxe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED7B317AD6892F80DA280131 /* Pods_Storyluxe.framework */; };
+		53653AA324322E7C00F3E5FB /* InviteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53653AA224322E7C00F3E5FB /* InviteViewController.swift */; };
+		53653AA52432360B00F3E5FB /* RTFViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53653AA42432360B00F3E5FB /* RTFViewController.swift */; };
+		53653AA72432361B00F3E5FB /* help_en.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 53653AA62432361A00F3E5FB /* help_en.rtf */; };
+		53653AA92432369F00F3E5FB /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53653AA82432369F00F3E5FB /* ImagePicker.swift */; };
+		53653AAE24323B2D00F3E5FB /* PreviewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53653AAD24323B2D00F3E5FB /* PreviewCollectionViewCell.swift */; };
+		53BA030F24320D7700286967 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BA030E24320D7700286967 /* Global.swift */; };
+		53BA0314243216C600286967 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BA0313243216C600286967 /* SettingsTableViewController.swift */; };
+		53E6785F2431F7F400E195AE /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53E6785E2431F7F400E195AE /* Constants.swift */; };
 		53E9EA132430FB9B00BC1B3E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53E9EA122430FB9B00BC1B3E /* AppDelegate.swift */; };
-		53E9EA152430FB9B00BC1B3E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53E9EA142430FB9B00BC1B3E /* SceneDelegate.swift */; };
-		53E9EA172430FB9B00BC1B3E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53E9EA162430FB9B00BC1B3E /* ViewController.swift */; };
-		53E9EA1A2430FB9B00BC1B3E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 53E9EA182430FB9B00BC1B3E /* Main.storyboard */; };
+		53E9EA172430FB9B00BC1B3E /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53E9EA162430FB9B00BC1B3E /* MainViewController.swift */; };
 		53E9EA1C2430FB9D00BC1B3E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 53E9EA1B2430FB9D00BC1B3E /* Assets.xcassets */; };
 		53E9EA1F2430FB9D00BC1B3E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 53E9EA1D2430FB9D00BC1B3E /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		53E9EA0F2430FB9B00BC1B3E /* Storyluxe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Storyluxe.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4E7766E0D035F12EE4666371 /* Pods-Storyluxe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Storyluxe.debug.xcconfig"; path = "Target Support Files/Pods-Storyluxe/Pods-Storyluxe.debug.xcconfig"; sourceTree = "<group>"; };
+		53653AA224322E7C00F3E5FB /* InviteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteViewController.swift; sourceTree = "<group>"; };
+		53653AA42432360B00F3E5FB /* RTFViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RTFViewController.swift; sourceTree = "<group>"; };
+		53653AA62432361A00F3E5FB /* help_en.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = help_en.rtf; sourceTree = "<group>"; };
+		53653AA82432369F00F3E5FB /* ImagePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		53653AAD24323B2D00F3E5FB /* PreviewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewCollectionViewCell.swift; sourceTree = "<group>"; };
+		53BA030E24320D7700286967 /* Global.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
+		53BA0313243216C600286967 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
+		53E6785E2431F7F400E195AE /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		53E9EA0F2430FB9B00BC1B3E /* Storyluxe *.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Storyluxe *.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		53E9EA122430FB9B00BC1B3E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		53E9EA142430FB9B00BC1B3E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		53E9EA162430FB9B00BC1B3E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		53E9EA192430FB9B00BC1B3E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		53E9EA162430FB9B00BC1B3E /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		53E9EA1B2430FB9D00BC1B3E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		53E9EA1E2430FB9D00BC1B3E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		53E9EA202430FB9D00BC1B3E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E83F10BF57C640D7AE847F3E /* Pods-Storyluxe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Storyluxe.release.xcconfig"; path = "Target Support Files/Pods-Storyluxe/Pods-Storyluxe.release.xcconfig"; sourceTree = "<group>"; };
+		ED7B317AD6892F80DA280131 /* Pods_Storyluxe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Storyluxe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,24 +47,88 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0BCE5C2E520ABBD9ABB428EC /* Pods_Storyluxe.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		02C4C1436BA124722DD4E4FA /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				4E7766E0D035F12EE4666371 /* Pods-Storyluxe.debug.xcconfig */,
+				E83F10BF57C640D7AE847F3E /* Pods-Storyluxe.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		117EC50C7B5A9C2EB89B0421 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				ED7B317AD6892F80DA280131 /* Pods_Storyluxe.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		53653AAA24323AC900F3E5FB /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				53653AA62432361A00F3E5FB /* help_en.rtf */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		53653AAB24323ADA00F3E5FB /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				53653AA82432369F00F3E5FB /* ImagePicker.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		53653AAC24323AF800F3E5FB /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				53653AAD24323B2D00F3E5FB /* PreviewCollectionViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		53BA03102432155200286967 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				53E9EA162430FB9B00BC1B3E /* MainViewController.swift */,
+				53BA0313243216C600286967 /* SettingsTableViewController.swift */,
+				53653AA224322E7C00F3E5FB /* InviteViewController.swift */,
+				53653AA42432360B00F3E5FB /* RTFViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		53E6785D2431F7E000E195AE /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				53E6785E2431F7F400E195AE /* Constants.swift */,
+				53BA030E24320D7700286967 /* Global.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		53E9EA062430FB9B00BC1B3E = {
 			isa = PBXGroup;
 			children = (
 				53E9EA112430FB9B00BC1B3E /* Storyluxe */,
 				53E9EA102430FB9B00BC1B3E /* Products */,
+				02C4C1436BA124722DD4E4FA /* Pods */,
+				117EC50C7B5A9C2EB89B0421 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
 		53E9EA102430FB9B00BC1B3E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				53E9EA0F2430FB9B00BC1B3E /* Storyluxe.app */,
+				53E9EA0F2430FB9B00BC1B3E /* Storyluxe *.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -57,9 +137,11 @@
 			isa = PBXGroup;
 			children = (
 				53E9EA122430FB9B00BC1B3E /* AppDelegate.swift */,
-				53E9EA142430FB9B00BC1B3E /* SceneDelegate.swift */,
-				53E9EA162430FB9B00BC1B3E /* ViewController.swift */,
-				53E9EA182430FB9B00BC1B3E /* Main.storyboard */,
+				53BA03102432155200286967 /* Controller */,
+				53653AAC24323AF800F3E5FB /* Cells */,
+				53E6785D2431F7E000E195AE /* Utils */,
+				53653AAA24323AC900F3E5FB /* Resources */,
+				53653AAB24323ADA00F3E5FB /* Extensions */,
 				53E9EA1B2430FB9D00BC1B3E /* Assets.xcassets */,
 				53E9EA1D2430FB9D00BC1B3E /* LaunchScreen.storyboard */,
 				53E9EA202430FB9D00BC1B3E /* Info.plist */,
@@ -74,9 +156,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 53E9EA232430FB9D00BC1B3E /* Build configuration list for PBXNativeTarget "Storyluxe" */;
 			buildPhases = (
+				0279176146B0AF06A9F1F434 /* [CP] Check Pods Manifest.lock */,
 				53E9EA0B2430FB9B00BC1B3E /* Sources */,
 				53E9EA0C2430FB9B00BC1B3E /* Frameworks */,
 				53E9EA0D2430FB9B00BC1B3E /* Resources */,
+				53E678602431F9F900E195AE /* ShellScript */,
+				AD28F7615EFD67A5D4250C60 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -84,7 +169,7 @@
 			);
 			name = Storyluxe;
 			productName = Storyluxe;
-			productReference = 53E9EA0F2430FB9B00BC1B3E /* Storyluxe.app */;
+			productReference = 53E9EA0F2430FB9B00BC1B3E /* Storyluxe *.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -126,35 +211,92 @@
 			buildActionMask = 2147483647;
 			files = (
 				53E9EA1F2430FB9D00BC1B3E /* LaunchScreen.storyboard in Resources */,
+				53653AA72432361B00F3E5FB /* help_en.rtf in Resources */,
 				53E9EA1C2430FB9D00BC1B3E /* Assets.xcassets in Resources */,
-				53E9EA1A2430FB9B00BC1B3E /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0279176146B0AF06A9F1F434 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Storyluxe-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		53E678602431F9F900E195AE /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#!/bin/bash\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"$INFOPLIST_FILE\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"$INFOPLIST_FILE\"\n\n\n";
+		};
+		AD28F7615EFD67A5D4250C60 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Storyluxe/Pods-Storyluxe-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Storyluxe/Pods-Storyluxe-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Storyluxe/Pods-Storyluxe-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		53E9EA0B2430FB9B00BC1B3E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				53E9EA172430FB9B00BC1B3E /* ViewController.swift in Sources */,
+				53BA030F24320D7700286967 /* Global.swift in Sources */,
+				53653AA52432360B00F3E5FB /* RTFViewController.swift in Sources */,
+				53BA0314243216C600286967 /* SettingsTableViewController.swift in Sources */,
+				53653AAE24323B2D00F3E5FB /* PreviewCollectionViewCell.swift in Sources */,
+				53E9EA172430FB9B00BC1B3E /* MainViewController.swift in Sources */,
+				53653AA324322E7C00F3E5FB /* InviteViewController.swift in Sources */,
+				53653AA92432369F00F3E5FB /* ImagePicker.swift in Sources */,
 				53E9EA132430FB9B00BC1B3E /* AppDelegate.swift in Sources */,
-				53E9EA152430FB9B00BC1B3E /* SceneDelegate.swift in Sources */,
+				53E6785F2431F7F400E195AE /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		53E9EA182430FB9B00BC1B3E /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				53E9EA192430FB9B00BC1B3E /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		53E9EA1D2430FB9D00BC1B3E /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -282,37 +424,41 @@
 		};
 		53E9EA242430FB9D00BC1B3E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4E7766E0D035F12EE4666371 /* Pods-Storyluxe.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = NGGLF95RDQ;
 				INFOPLIST_FILE = Storyluxe/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.kovallux.Storyluxe;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Storyluxe *";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
 		53E9EA252430FB9D00BC1B3E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E83F10BF57C640D7AE847F3E /* Pods-Storyluxe.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = NGGLF95RDQ;
 				INFOPLIST_FILE = Storyluxe/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.kovallux.Storyluxe;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Storyluxe *";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
