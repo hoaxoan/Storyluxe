@@ -12,6 +12,7 @@ struct Template: Codable {
     var filename: String
     var isPremium: Bool
     var type: FrameType
+    var collage: Collage
 }
 
 struct TemplateSet: Codable {

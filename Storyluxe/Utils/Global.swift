@@ -99,30 +99,53 @@ class Global: NSObject {
                                    aspect: .aspect9_16))]
     }
     
-    func saveCollages(_ collages: [Collage]?) {
-        guard let collages = collages else { return }
+    func save<T: Encodable>(_ items: [T]?, key: String) {
+        guard let items = items else { return }
         do {
-            let data = try PropertyListEncoder().encode(collages)
-            let collagesData = try NSKeyedArchiver.archivedData(withRootObject: data, requiringSecureCoding: false)
-            UserDefaults.standard.set(collagesData, forKey: collagesKey)
+            let data = try PropertyListEncoder().encode(items)
+            let itemsData = try NSKeyedArchiver.archivedData(withRootObject: data, requiringSecureCoding: false)
+            UserDefaults.standard.set(itemsData, forKey: key)
         } catch {
-            print("⚠️ save Failed")
+            print("⚠️ save items failed = \(error.localizedDescription)")
         }
     }
     
-    func restoreCollages() -> [Collage]? {
+    func restore<T: Decodable>(_ key: String) -> [T]? {
         
-        if let data = UserDefaults.standard.data(forKey: collagesKey) {
+        if let data = UserDefaults.standard.data(forKey: key) {
             do {
-                let collagesData = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? Data
-                let collages = try PropertyListDecoder().decode([Collage].self, from: collagesData!)
-                return collages
+                let itemsData = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? Data
+                let items = try PropertyListDecoder().decode([T].self, from: itemsData!)
+                return items
             } catch {
-                print("⚠️ restore collages failed = \(error.localizedDescription)")
+                print("⚠️ restore items failed = \(error.localizedDescription)")
                 return nil
             }
         }
         return nil
+    }
+    
+    func testSets() -> [TemplateSet] {
+        let set1 = [Template(filename: "instant_1f", isPremium: false, type: .one, collage: testCollages()[0]),
+                    Template(filename: "instant_2f", isPremium: true, type: .two, collage: testCollages()[1]),
+                    Template(filename: "instant_3f", isPremium: true, type: .three, collage: testCollages()[2]),
+                    Template(filename: "instant_4f", isPremium: false, type: .four, collage: testCollages()[3])]
+        let set2 = [Template(filename: "instant_4f", isPremium: true, type: .four, collage: testCollages()[0]),
+                    Template(filename: "instant_2f", isPremium: false, type: .two, collage: testCollages()[1]),
+                    Template(filename: "instant_1f", isPremium: true, type: .one, collage: testCollages()[2]),
+                    Template(filename: "instant_3f", isPremium: false, type: .three, collage: testCollages()[3])]
+        
+        let flame = Image.init(withImage: UIImage(named: "flame")!.tint(color: pinkTint))
+        let sets = [TemplateSet(title: nil, image: flame, set: set1),
+                    TemplateSet(title: "film", image: nil, set: set2),
+                    TemplateSet(title: "love", image: nil, set: set1),
+                    TemplateSet(title: "paper", image: nil, set: set2),
+                    TemplateSet(title: "tape", image: nil, set: set1),
+                    TemplateSet(title: "element", image: nil, set: set2),
+                    TemplateSet(title: "collage", image: nil, set: set1),
+                    TemplateSet(title: "neon", image: nil, set: set2)]
+        
+        return sets
     }
 }
 

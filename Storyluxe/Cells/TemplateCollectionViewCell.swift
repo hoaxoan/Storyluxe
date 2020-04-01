@@ -10,12 +10,12 @@ import UIKit
 
 class TemplateCollectionViewCell: UICollectionViewCell {
     
-    var collage: Collage? {
+    var template: Template? {
         didSet {
-            frameView.image = collage?.set.template.getImage()
+            frameView.image = UIImage(named: template!.filename)
             
             var imageCenter = frameView.center
-            switch collage?.set.type {
+            switch template?.type {
             case .one:
                 imageCenter.y -= 13
                 let button1 = button(CGSize(width: frame.width * 0.75, height: frame.height * 0.57), imageCenter)
@@ -91,7 +91,7 @@ class TemplateCollectionViewCell: UICollectionViewCell {
                 background.addSubview(button3)
             default: break }
             
-            if collage!.isPremium {
+            if template!.isPremium {
                 lock.center = CGPoint(x: background.frame.maxX - 10, y: background.frame.minY + 10)
                 lock.layer.addShadow()
                 addSubview(lock)

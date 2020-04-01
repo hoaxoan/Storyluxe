@@ -16,7 +16,8 @@ let lightGrayTint = UIColor(white: 0.7, alpha: 1)
 let veryLightGrayTint = UIColor(white: 0.93, alpha: 1.0)
 
 // kets
-let collagesKey = "collagesKey"
+let allTemplatesKey = "allTemplatesKey"
+let userCollagesKey = "userCollagesKey"
 
 // enums
 enum ButtonSize {

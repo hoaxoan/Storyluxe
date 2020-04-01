@@ -29,7 +29,7 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         imagePicker.delegate = self
         
         items = Global.shared.testCollages()
-        if let collages = Global.shared.restoreCollages(), collages.count > 0 {
+        if let collages = Global.shared.restore(userCollagesKey) as [Collage]?, collages.count > 0 {
             items = collages
         }
         
