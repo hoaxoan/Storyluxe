@@ -15,7 +15,7 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
     private lazy var imagePicker = ImagePicker()
     
     // collection view
-    let leftAndRightPaddings: CGFloat = 80.0
+    let leftAndRightPaddings: CGFloat = 50.0
     let numberOfItemsPerRow: CGFloat = 3.0
     let screenSize: CGRect = UIScreen.main.bounds
     private let cellReuseIdentifier = "CollectionCell"
@@ -54,7 +54,7 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         email.addTarget(self, action: #selector(showShareVC), for: .touchUpInside)
         view.addSubview(email)
         
-        let more = Global.shared.button("more", CGRect(origin: CGPoint(x: view.frame.size.width - 50, y: 50), size: size), .white, .small)
+        let more = Global.shared.button("more", CGRect(origin: CGPoint(x: view.frame.width - 50, y: 50), size: size), .white, .small)
         more.addTarget(self, action: #selector(showMoreVC), for: .touchUpInside)
         view.addSubview(more)
         
@@ -62,7 +62,7 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         let title = UIImageView(image: UIImage(named: "storyluxe-title-white"))
         title.contentMode = .scaleAspectFit
         let width: CGFloat = 135
-        title.frame = CGRect(origin: CGPoint(x: (view.frame.size.width - width)/2, y: 55), size: CGSize(width: width, height: 25))
+        title.frame = CGRect(origin: CGPoint(x: (view.frame.width - width)/2, y: 55), size: CGSize(width: width, height: 25))
         view.addSubview(title)
         
         // bottom buttons
@@ -116,7 +116,6 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath)
-        dump(cell)
         let editorVC = EditorViewController()
         present(editorVC, animated: true, completion: nil)
     }
@@ -124,7 +123,7 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = (screenSize.width - leftAndRightPaddings)/numberOfItemsPerRow
-        return CGSize(width: width, height: width * 1.5)
+        return CGSize(width: width, height: width * 1.7)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
@@ -148,7 +147,8 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
     }
     
     @objc func showTemplates() {
-        print(#function)
+        let templatesVC = TemplatesViewController()
+        present(templatesVC, animated: true, completion: nil)
     }
     
     @objc func showCamera() {

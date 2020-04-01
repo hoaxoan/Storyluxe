@@ -19,7 +19,7 @@ class InviteViewController: UIViewController {
         view.addSubview(background)
         
         let width: CGFloat = 150
-        let label = UILabel(frame: CGRect(origin: CGPoint(x: (view.frame.size.width - width)/2, y: 55), size: CGSize(width: width, height: 25)))
+        let label = UILabel(frame: CGRect(origin: CGPoint(x: (view.frame.width - width)/2, y: 55), size: CGSize(width: width, height: 25)))
         label.textAlignment = .center
         label.textColor = .lightGray
         label.text = "Invite your friends"

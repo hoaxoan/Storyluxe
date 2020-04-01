@@ -13,6 +13,8 @@
 		53653AA72432361B00F3E5FB /* help_en.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 53653AA62432361A00F3E5FB /* help_en.rtf */; };
 		53653AA92432369F00F3E5FB /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53653AA82432369F00F3E5FB /* ImagePicker.swift */; };
 		53653AAE24323B2D00F3E5FB /* PreviewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53653AAD24323B2D00F3E5FB /* PreviewCollectionViewCell.swift */; };
+		536D778F243451AE00601A24 /* TemplatesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536D778E243451AE00601A24 /* TemplatesViewController.swift */; };
+		536D7791243459F900601A24 /* TemplateCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536D7790243459F900601A24 /* TemplateCollectionViewCell.swift */; };
 		53BA030F24320D7700286967 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BA030E24320D7700286967 /* Global.swift */; };
 		53BA0314243216C600286967 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BA0313243216C600286967 /* SettingsTableViewController.swift */; };
 		53D7A2F524327B52006013C1 /* EditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D7A2F424327B52006013C1 /* EditorViewController.swift */; };
@@ -30,6 +32,8 @@
 		53653AA62432361A00F3E5FB /* help_en.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = help_en.rtf; sourceTree = "<group>"; };
 		53653AA82432369F00F3E5FB /* ImagePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		53653AAD24323B2D00F3E5FB /* PreviewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewCollectionViewCell.swift; sourceTree = "<group>"; };
+		536D778E243451AE00601A24 /* TemplatesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplatesViewController.swift; sourceTree = "<group>"; };
+		536D7790243459F900601A24 /* TemplateCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateCollectionViewCell.swift; sourceTree = "<group>"; };
 		53BA030E24320D7700286967 /* Global.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
 		53BA0313243216C600286967 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		53D7A2F424327B52006013C1 /* EditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorViewController.swift; sourceTree = "<group>"; };
@@ -93,6 +97,7 @@
 			isa = PBXGroup;
 			children = (
 				53653AAD24323B2D00F3E5FB /* PreviewCollectionViewCell.swift */,
+				536D7790243459F900601A24 /* TemplateCollectionViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -105,6 +110,7 @@
 				53653AA224322E7C00F3E5FB /* InviteViewController.swift */,
 				53653AA42432360B00F3E5FB /* RTFViewController.swift */,
 				53D7A2F424327B52006013C1 /* EditorViewController.swift */,
+				536D778E243451AE00601A24 /* TemplatesViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -289,11 +295,13 @@
 				53653AA52432360B00F3E5FB /* RTFViewController.swift in Sources */,
 				53BA0314243216C600286967 /* SettingsTableViewController.swift in Sources */,
 				53D7A2F524327B52006013C1 /* EditorViewController.swift in Sources */,
+				536D7791243459F900601A24 /* TemplateCollectionViewCell.swift in Sources */,
 				53653AAE24323B2D00F3E5FB /* PreviewCollectionViewCell.swift in Sources */,
 				53E9EA172430FB9B00BC1B3E /* MainViewController.swift in Sources */,
 				53653AA324322E7C00F3E5FB /* InviteViewController.swift in Sources */,
 				53653AA92432369F00F3E5FB /* ImagePicker.swift in Sources */,
 				53E9EA132430FB9B00BC1B3E /* AppDelegate.swift in Sources */,
+				536D778F243451AE00601A24 /* TemplatesViewController.swift in Sources */,
 				53E6785F2431F7F400E195AE /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -27,7 +27,7 @@ class Global: NSObject {
         default: break
         }
         
-        var image = UIImage(named: image)?.resize(frame.size.width - inset)
+        var image = UIImage(named: image)?.resize(frame.width - inset)
         if let tint = tint {
             image = image?.tint(color: tint)
         }

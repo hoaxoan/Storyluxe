@@ -36,8 +36,6 @@ class PreviewCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        
-        
         preview.frame = bounds
         addSubview(preview)
     }
