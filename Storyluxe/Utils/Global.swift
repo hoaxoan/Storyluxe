@@ -69,6 +69,61 @@ class Global: NSObject {
         imageView.layer.masksToBounds = true
         return imageView
     }
+    
+    // MARK: - Collages
+    
+    func testCollages() -> [Collage] {
+        return [Collage(id: UUID().uuidString,
+                        isPremium: false,
+                        set: Frame(thumbnail: Image(withImage: UIImage(named: "brian")!),
+                                   template: Image(withImage: UIImage(named: "instant_1f")!),
+                                   type: .one,
+                                   aspect: .aspect9_16)),
+                Collage(id: UUID().uuidString,
+                        isPremium: true,
+                        set: Frame(thumbnail: Image(withImage: UIImage(named: "nichole")!),
+                                   template: Image(withImage: UIImage(named: "instant_2f")!),
+                                   type: .two,
+                                   aspect: .aspect9_16)),
+                Collage(id: UUID().uuidString,
+                        isPremium: true,
+                        set: Frame(thumbnail: Image(withImage: UIImage(named: "brian")!),
+                                   template: Image(withImage: UIImage(named: "instant_3f")!),
+                                   type: .three,
+                                   aspect: .aspect9_16)),
+                Collage(id: UUID().uuidString,
+                        isPremium: false,
+                        set: Frame(thumbnail: Image(withImage: UIImage(named: "nichole")!),
+                                   template: Image(withImage: UIImage(named: "instant_4f")!),
+                                   type: .four,
+                                   aspect: .aspect9_16))]
+    }
+    
+    func saveCollages(_ collages: [Collage]?) {
+        guard let collages = collages else { return }
+        do {
+            let data = try PropertyListEncoder().encode(collages)
+            let collagesData = try NSKeyedArchiver.archivedData(withRootObject: data, requiringSecureCoding: false)
+            UserDefaults.standard.set(collagesData, forKey: collagesKey)
+        } catch {
+            print("⚠️ save Failed")
+        }
+    }
+    
+    func restoreCollages() -> [Collage]? {
+        
+        if let data = UserDefaults.standard.data(forKey: collagesKey) {
+            do {
+                let collagesData = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? Data
+                let collages = try PropertyListDecoder().decode([Collage].self, from: collagesData!)
+                return collages
+            } catch {
+                print("⚠️ restore collages failed = \(error.localizedDescription)")
+                return nil
+            }
+        }
+        return nil
+    }
 }
 
 // MARK: - Extensions
@@ -132,5 +187,82 @@ extension UIImage {
         UIGraphicsEndImageContext()
         
         return newImage!
+    }
+}
+
+extension UIView {
+    func rotate(degrees: CGFloat) {
+        let degreesToRadians: (CGFloat) -> CGFloat = { (degrees: CGFloat) in
+            return degrees / 180.0 * CGFloat.pi
+        }
+        self.transform =  CGAffineTransform(rotationAngle: degreesToRadians(degrees))
+    }
+}
+
+extension CALayer {
+    func addShadow() {
+        self.shadowOffset = .zero
+        self.shadowOpacity = 0.3
+        self.shadowRadius = 7
+        self.shadowColor = UIColor.black.cgColor
+        self.masksToBounds = false
+        if cornerRadius != 0 {
+            addShadowWithRoundedCorners()
+        }
+    }
+    func roundCorners(radius: CGFloat) {
+        self.cornerRadius = radius
+        if shadowOpacity != 0 {
+            addShadowWithRoundedCorners()
+        }
+    }
+    
+    private func addShadowWithRoundedCorners() {
+        if let contents = self.contents {
+            masksToBounds = false
+            sublayers?.filter{ $0.frame.equalTo(self.bounds) }
+                .forEach{ $0.roundCorners(radius: self.cornerRadius) }
+            self.contents = nil
+            if let sublayer = sublayers?.first,
+                sublayer.name == "contentLayer" {
+                
+                sublayer.removeFromSuperlayer()
+            }
+            let contentLayer = CALayer()
+            contentLayer.name = "contentLayer"
+            contentLayer.contents = contents
+            contentLayer.frame = bounds
+            contentLayer.cornerRadius = cornerRadius
+            contentLayer.masksToBounds = true
+            insertSublayer(contentLayer, at: 0)
+        }
+    }
+}
+
+extension UIColor {
+    public convenience init?(hex: String) {
+        let r, g, b, a: CGFloat
+
+        if hex.hasPrefix("#") {
+            let start = hex.index(hex.startIndex, offsetBy: 1)
+            let hexColor = String(hex[start...])
+
+            if hexColor.count == 8 {
+                let scanner = Scanner(string: hexColor)
+                var hexNumber: UInt64 = 0
+
+                if scanner.scanHexInt64(&hexNumber) {
+                    r = CGFloat((hexNumber & 0xff000000) >> 24) / 255
+                    g = CGFloat((hexNumber & 0x00ff0000) >> 16) / 255
+                    b = CGFloat((hexNumber & 0x0000ff00) >> 8) / 255
+                    a = CGFloat(hexNumber & 0x000000ff) / 255
+
+                    self.init(red: r, green: g, blue: b, alpha: a)
+                    return
+                }
+            }
+        }
+
+        return nil
     }
 }

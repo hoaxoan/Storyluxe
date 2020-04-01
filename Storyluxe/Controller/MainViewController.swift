@@ -19,7 +19,7 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
     let numberOfItemsPerRow: CGFloat = 3.0
     let screenSize: CGRect = UIScreen.main.bounds
     private let cellReuseIdentifier = "CollectionCell"
-    var items = ["brian", "nichole", "brian", "nichole", "brian", "nichole", "brian", "nichole", "brian", "nichole", "brian", "nichole", "brian", "nichole", "brian", "nichole", "brian", "nichole", "brian", "nichole", "brian", "nichole", "brian", "nichole", "brian", "nichole"]
+    var items = [Collage]()
     
     // MARK: - Lifecycle
     
@@ -27,6 +27,12 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         super.viewDidLoad()
         view.backgroundColor = blackTint
         imagePicker.delegate = self
+        
+        items = Global.shared.testCollages()
+        if let collages = Global.shared.restoreCollages(), collages.count > 0 {
+            items = collages
+        }
+        
         setupUI()
     }
 
@@ -110,13 +116,13 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellReuseIdentifier, for: indexPath) as! PreviewCollectionViewCell
-        cell.image = UIImage(named: items[indexPath.item])
+        cell.image = items[indexPath.item].set.thumbnail.getImage()
         return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath)
         let editorVC = EditorViewController()
+        editorVC.collage = items[indexPath.item]
         present(editorVC, animated: true, completion: nil)
     }
     // collection layout

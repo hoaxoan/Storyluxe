@@ -10,39 +10,12 @@ import UIKit
 
 class TemplateCollectionViewCell: UICollectionViewCell {
     
-    // frames
-    
-    private let background: UIView = {
-        let background = UIView()
-        background.backgroundColor = veryLightGrayTint
-        background.layer.cornerRadius = 10
-        background.layer.masksToBounds = true
-        return background
-    }()
-    
-    private let frameView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.backgroundColor = .clear
-        imageView.layer.cornerRadius = 10
-        imageView.layer.borderColor = pinkTint.cgColor
-        imageView.layer.borderWidth = 0.0
-        imageView.contentMode = .scaleAspectFill
-        imageView.layer.masksToBounds = true
-        return imageView
-    }()
-    
-    var image: UIImage? {
+    var collage: Collage? {
         didSet {
-            frameView.image = image
-        }
-    }
-    
-    // placeholders
-    
-    var frameType: FrameType? {
-        didSet {
+            frameView.image = collage?.set.template.getImage()
+            
             var imageCenter = frameView.center
-            switch frameType {
+            switch collage?.set.type {
             case .one:
                 imageCenter.y -= 13
                 let button1 = button(CGSize(width: frame.width * 0.75, height: frame.height * 0.57), imageCenter)
@@ -117,16 +90,42 @@ class TemplateCollectionViewCell: UICollectionViewCell {
                 button3.rotate(degrees: -1.0)
                 background.addSubview(button3)
             default: break }
+            
+            if collage!.isPremium {
+                lock.center = CGPoint(x: background.frame.maxX - 10, y: background.frame.minY + 10)
+                lock.layer.addShadow()
+                addSubview(lock)
+            }
         }
     }
     
-    // lock
+    private let background: UIView = {
+        let background = UIView()
+        background.backgroundColor = veryLightGrayTint
+        background.layer.cornerRadius = 10
+        background.layer.masksToBounds = true
+        return background
+    }()
     
+    private let frameView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.backgroundColor = .clear
+        imageView.layer.cornerRadius = 10
+        imageView.layer.borderColor = pinkTint.cgColor
+        imageView.layer.borderWidth = 0.0
+        imageView.contentMode = .scaleAspectFill
+        imageView.layer.masksToBounds = true
+        return imageView
+    }()
+
     private let lock: UIView = {
-        let lock = UIButton(frame: CGRect(origin: .zero, size: .init(width: 40, height: 40)))
+        let size: CGFloat = 35
+        let lock = UIButton(frame: CGRect(origin: .zero, size: .init(width: size, height: size)))
         lock.backgroundColor = veryLightGrayTint
-        lock.layer.cornerRadius = 10
+        lock.layer.cornerRadius = size/2
         lock.layer.masksToBounds = true
+        lock.setImage(UIImage(named: "lock")?.tint(color: .darkGray), for: .normal)
+        lock.isEnabled = false
         return lock
     }()
     
@@ -161,14 +160,5 @@ class TemplateCollectionViewCell: UICollectionViewCell {
         button.center = center
         button.isEnabled = false
         return button
-    }
-}
-
-extension UIView {
-    func rotate(degrees: CGFloat) {
-        let degreesToRadians: (CGFloat) -> CGFloat = { (degrees: CGFloat) in
-            return degrees / 180.0 * CGFloat.pi
-        }
-        self.transform =  CGAffineTransform(rotationAngle: degreesToRadians(degrees))
     }
 }

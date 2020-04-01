@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		0BCE5C2E520ABBD9ABB428EC /* Pods_Storyluxe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED7B317AD6892F80DA280131 /* Pods_Storyluxe.framework */; };
+		531F4D482434B3E000B8FA04 /* Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531F4D472434B3E000B8FA04 /* Text.swift */; };
+		531F4D4A2434B42500B8FA04 /* Frame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531F4D492434B42500B8FA04 /* Frame.swift */; };
+		531F4D4C2434BCB700B8FA04 /* Template.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531F4D4B2434BCB700B8FA04 /* Template.swift */; };
 		53653AA324322E7C00F3E5FB /* InviteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53653AA224322E7C00F3E5FB /* InviteViewController.swift */; };
 		53653AA52432360B00F3E5FB /* RTFViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53653AA42432360B00F3E5FB /* RTFViewController.swift */; };
 		53653AA72432361B00F3E5FB /* help_en.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 53653AA62432361A00F3E5FB /* help_en.rtf */; };
@@ -15,6 +18,7 @@
 		53653AAE24323B2D00F3E5FB /* PreviewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53653AAD24323B2D00F3E5FB /* PreviewCollectionViewCell.swift */; };
 		536D778F243451AE00601A24 /* TemplatesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536D778E243451AE00601A24 /* TemplatesViewController.swift */; };
 		536D7791243459F900601A24 /* TemplateCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536D7790243459F900601A24 /* TemplateCollectionViewCell.swift */; };
+		536D779424348C0700601A24 /* Collage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536D779324348C0700601A24 /* Collage.swift */; };
 		53BA030F24320D7700286967 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BA030E24320D7700286967 /* Global.swift */; };
 		53BA0314243216C600286967 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BA0313243216C600286967 /* SettingsTableViewController.swift */; };
 		53D7A2F524327B52006013C1 /* EditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D7A2F424327B52006013C1 /* EditorViewController.swift */; };
@@ -27,6 +31,9 @@
 
 /* Begin PBXFileReference section */
 		4E7766E0D035F12EE4666371 /* Pods-Storyluxe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Storyluxe.debug.xcconfig"; path = "Target Support Files/Pods-Storyluxe/Pods-Storyluxe.debug.xcconfig"; sourceTree = "<group>"; };
+		531F4D472434B3E000B8FA04 /* Text.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Text.swift; sourceTree = "<group>"; };
+		531F4D492434B42500B8FA04 /* Frame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Frame.swift; sourceTree = "<group>"; };
+		531F4D4B2434BCB700B8FA04 /* Template.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Template.swift; sourceTree = "<group>"; };
 		53653AA224322E7C00F3E5FB /* InviteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteViewController.swift; sourceTree = "<group>"; };
 		53653AA42432360B00F3E5FB /* RTFViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RTFViewController.swift; sourceTree = "<group>"; };
 		53653AA62432361A00F3E5FB /* help_en.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = help_en.rtf; sourceTree = "<group>"; };
@@ -34,6 +41,7 @@
 		53653AAD24323B2D00F3E5FB /* PreviewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewCollectionViewCell.swift; sourceTree = "<group>"; };
 		536D778E243451AE00601A24 /* TemplatesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplatesViewController.swift; sourceTree = "<group>"; };
 		536D7790243459F900601A24 /* TemplateCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateCollectionViewCell.swift; sourceTree = "<group>"; };
+		536D779324348C0700601A24 /* Collage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Collage.swift; sourceTree = "<group>"; };
 		53BA030E24320D7700286967 /* Global.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
 		53BA0313243216C600286967 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		53D7A2F424327B52006013C1 /* EditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorViewController.swift; sourceTree = "<group>"; };
@@ -102,6 +110,17 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		536D779224348BE300601A24 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				536D779324348C0700601A24 /* Collage.swift */,
+				531F4D472434B3E000B8FA04 /* Text.swift */,
+				531F4D492434B42500B8FA04 /* Frame.swift */,
+				531F4D4B2434BCB700B8FA04 /* Template.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		53BA03102432155200286967 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -151,6 +170,7 @@
 				53E6785D2431F7E000E195AE /* Utils */,
 				53653AAA24323AC900F3E5FB /* Resources */,
 				53653AAB24323ADA00F3E5FB /* Extensions */,
+				536D779224348BE300601A24 /* Models */,
 				53E9EA1B2430FB9D00BC1B3E /* Assets.xcassets */,
 				53E9EA1D2430FB9D00BC1B3E /* LaunchScreen.storyboard */,
 				53E9EA202430FB9D00BC1B3E /* Info.plist */,
@@ -291,15 +311,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				531F4D4C2434BCB700B8FA04 /* Template.swift in Sources */,
 				53BA030F24320D7700286967 /* Global.swift in Sources */,
 				53653AA52432360B00F3E5FB /* RTFViewController.swift in Sources */,
 				53BA0314243216C600286967 /* SettingsTableViewController.swift in Sources */,
 				53D7A2F524327B52006013C1 /* EditorViewController.swift in Sources */,
 				536D7791243459F900601A24 /* TemplateCollectionViewCell.swift in Sources */,
+				536D779424348C0700601A24 /* Collage.swift in Sources */,
 				53653AAE24323B2D00F3E5FB /* PreviewCollectionViewCell.swift in Sources */,
 				53E9EA172430FB9B00BC1B3E /* MainViewController.swift in Sources */,
 				53653AA324322E7C00F3E5FB /* InviteViewController.swift in Sources */,
+				531F4D4A2434B42500B8FA04 /* Frame.swift in Sources */,
 				53653AA92432369F00F3E5FB /* ImagePicker.swift in Sources */,
+				531F4D482434B3E000B8FA04 /* Text.swift in Sources */,
 				53E9EA132430FB9B00BC1B3E /* AppDelegate.swift in Sources */,
 				536D778F243451AE00601A24 /* TemplatesViewController.swift in Sources */,
 				53E6785F2431F7F400E195AE /* Constants.swift in Sources */,

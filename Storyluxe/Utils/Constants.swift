@@ -15,15 +15,31 @@ let blueTint = UIColor(red: 114/255, green: 210/255, blue: 233/255, alpha: 1.0)
 let lightGrayTint = UIColor(white: 0.7, alpha: 1)
 let veryLightGrayTint = UIColor(white: 0.93, alpha: 1.0)
 
+// kets
+let collagesKey = "collagesKey"
+
+// enums
 enum ButtonSize {
     case normal
     case small
     case verysmall
 }
 
-enum FrameType {
+enum FrameType: Int, Codable {
     case one
     case two
     case three
     case four
+    case none
+}
+
+enum Aspect: Int, Codable {
+    case aspect4_5
+    case aspect9_16
+}
+
+enum Align: Int, Codable {
+    case left
+    case center
+    case right
 }

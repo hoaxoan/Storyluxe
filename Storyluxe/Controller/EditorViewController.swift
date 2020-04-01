@@ -21,6 +21,12 @@ class EditorViewController: UIViewController {
     let top: CGFloat = 20
     let left: CGFloat = 25
     
+    var collage: Collage? {
+    didSet {
+            dump(collage)
+        }
+    }
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
