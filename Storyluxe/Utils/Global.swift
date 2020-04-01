@@ -136,14 +136,22 @@ class Global: NSObject {
                     Template(filename: "instant_3f", isPremium: false, type: .three, collage: testCollages()[3])]
         
         let flame = Image.init(withImage: UIImage(named: "flame")!.tint(color: pinkTint))
-        let sets = [TemplateSet(title: nil, image: flame, set: set1),
-                    TemplateSet(title: "film", image: nil, set: set2),
-                    TemplateSet(title: "love", image: nil, set: set1),
-                    TemplateSet(title: "paper", image: nil, set: set2),
-                    TemplateSet(title: "tape", image: nil, set: set1),
-                    TemplateSet(title: "element", image: nil, set: set2),
-                    TemplateSet(title: "collage", image: nil, set: set1),
-                    TemplateSet(title: "neon", image: nil, set: set2)]
+        let sets = [TemplateSet(title: nil, image: flame, set: set1, installed: true),
+                    TemplateSet(title: "film", image: nil, set: set2, installed: true),
+                    TemplateSet(title: "love", image: nil, set: set1, installed: true),
+                    TemplateSet(title: "paper", image: nil, set: set2, installed: true),
+                    TemplateSet(title: "tape", image: nil, set: set1, installed: true),
+                    TemplateSet(title: "element", image: nil, set: set2, installed: true),
+                    TemplateSet(title: "collage", image: nil, set: set1, installed: true),
+                    TemplateSet(title: "neon", image: nil, set: set2, installed: true),
+                    TemplateSet(title: "edge", image: nil, set: set1, installed: false),
+                    TemplateSet(title: "flora", image: nil, set: set2, installed: false),
+                    TemplateSet(title: "moi", image: nil, set: set1, installed: false),
+                    TemplateSet(title: "later", image: nil, set: set2, installed: false),
+                    TemplateSet(title: "usa", image: nil, set: set1, installed: false),
+                    TemplateSet(title: "spooky", image: nil, set: set2, installed: false),
+                    TemplateSet(title: "holiday", image: nil, set: set1, installed: false),
+                    TemplateSet(title: "new year", image: nil, set: set2, installed: false)]
         
         return sets
     }

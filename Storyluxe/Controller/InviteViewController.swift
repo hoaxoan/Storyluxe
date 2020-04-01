@@ -48,7 +48,6 @@ class InviteViewController: UIViewController {
         copy.addTarget(self, action: #selector(copyLink), for: .touchUpInside)
         view.addSubview(copy)
     }
-    
 
     // MARK: - Actions
     

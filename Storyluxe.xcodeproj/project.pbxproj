@@ -19,6 +19,7 @@
 		536D778F243451AE00601A24 /* TemplatesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536D778E243451AE00601A24 /* TemplatesViewController.swift */; };
 		536D7791243459F900601A24 /* TemplateCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536D7790243459F900601A24 /* TemplateCollectionViewCell.swift */; };
 		536D779424348C0700601A24 /* Collage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536D779324348C0700601A24 /* Collage.swift */; };
+		537DC5682434E56600FFD3C7 /* PurchaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 537DC5672434E56600FFD3C7 /* PurchaseViewController.swift */; };
 		53BA030F24320D7700286967 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BA030E24320D7700286967 /* Global.swift */; };
 		53BA0314243216C600286967 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BA0313243216C600286967 /* SettingsTableViewController.swift */; };
 		53D7A2F524327B52006013C1 /* EditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D7A2F424327B52006013C1 /* EditorViewController.swift */; };
@@ -42,6 +43,7 @@
 		536D778E243451AE00601A24 /* TemplatesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplatesViewController.swift; sourceTree = "<group>"; };
 		536D7790243459F900601A24 /* TemplateCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateCollectionViewCell.swift; sourceTree = "<group>"; };
 		536D779324348C0700601A24 /* Collage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Collage.swift; sourceTree = "<group>"; };
+		537DC5672434E56600FFD3C7 /* PurchaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseViewController.swift; sourceTree = "<group>"; };
 		53BA030E24320D7700286967 /* Global.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
 		53BA0313243216C600286967 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		53D7A2F424327B52006013C1 /* EditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorViewController.swift; sourceTree = "<group>"; };
@@ -130,6 +132,7 @@
 				53653AA42432360B00F3E5FB /* RTFViewController.swift */,
 				53D7A2F424327B52006013C1 /* EditorViewController.swift */,
 				536D778E243451AE00601A24 /* TemplatesViewController.swift */,
+				537DC5672434E56600FFD3C7 /* PurchaseViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -314,6 +317,7 @@
 				531F4D4C2434BCB700B8FA04 /* Template.swift in Sources */,
 				53BA030F24320D7700286967 /* Global.swift in Sources */,
 				53653AA52432360B00F3E5FB /* RTFViewController.swift in Sources */,
+				537DC5682434E56600FFD3C7 /* PurchaseViewController.swift in Sources */,
 				53BA0314243216C600286967 /* SettingsTableViewController.swift in Sources */,
 				53D7A2F524327B52006013C1 /* EditorViewController.swift in Sources */,
 				536D7791243459F900601A24 /* TemplateCollectionViewCell.swift in Sources */,
