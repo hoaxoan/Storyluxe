@@ -15,9 +15,19 @@ class Global: NSObject {
     
     // MARK: - UI elements
     
-    func button(_ image: String, _ frame: CGRect, _ tint: UIColor?) -> UIButton {
+    func button(_ image: String, _ frame: CGRect, _ tint: UIColor?, _ size: ButtonSize = .normal) -> UIButton {
         let button = UIButton(frame: frame)
-        var image = UIImage(named: image)?.resize(frame.size.width - 5)
+        
+        var inset: CGFloat = 5
+        switch size {
+        case .small:
+            inset = 15
+        case .verysmall:
+            inset = 20
+        default: break
+        }
+        
+        var image = UIImage(named: image)?.resize(frame.size.width - inset)
         if let tint = tint {
             image = image?.tint(color: tint)
         }
@@ -25,9 +35,12 @@ class Global: NSObject {
         return button
     }
     
-    func tabButton(_ image: String, _ name: String, _ view: UIView, _ x: CGFloat, _ tint: UIColor?) -> (UIButton, UIView) {
-        let width: CGFloat = 70
-        let background = UIView(frame: CGRect(origin: CGPoint(x: x, y: view.frame.size.height - (width + 55)), size: CGSize(width: width, height: width + 25)))
+    func tabButton(_ image: String, _ name: String, _ view: UIView, _ x: CGFloat, _ tint: UIColor?, _ isSmall: Bool = false, _ isModal: Bool = false) -> (UIButton, UIView) {
+        
+        let width: CGFloat = isSmall ? 60 : 70
+        
+        let background = UIView(frame: CGRect(origin: .zero, size: CGSize(width: width, height: width + 25)))
+        background.center = CGPoint(x: x, y: view.frame.size.height - (width + (isModal ? 60 : 10)))
         background.backgroundColor = .clear
         
         let button = UIButton(frame: CGRect(origin: .zero, size: CGSize(width: width, height: width)))
@@ -42,7 +55,7 @@ class Global: NSObject {
         title.textAlignment = .center
         title.textColor = .lightGray
         title.text = name
-        title.font = .systemFont(ofSize: 14)
+        title.font = .systemFont(ofSize: isSmall ? 12 : 14)
         background.addSubview(title)
         
         return (button, background)

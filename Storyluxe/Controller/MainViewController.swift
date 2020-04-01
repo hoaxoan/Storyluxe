@@ -54,7 +54,7 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         email.addTarget(self, action: #selector(showShareVC), for: .touchUpInside)
         view.addSubview(email)
         
-        let more = Global.shared.button("more", CGRect(origin: CGPoint(x: view.frame.size.width - 60, y: 50), size: size), .white)
+        let more = Global.shared.button("more", CGRect(origin: CGPoint(x: view.frame.size.width - 50, y: 50), size: size), .white, .small)
         more.addTarget(self, action: #selector(showMoreVC), for: .touchUpInside)
         view.addSubview(more)
         
@@ -67,15 +67,22 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         
         // bottom buttons
         
-        let (button1, myMedia) = Global.shared.tabButton("media", "My Media", view, 40, .white)
+        let left: CGFloat = 25
+        let offset = view.frame.width/3
+        var centers = [CGFloat]()
+        for i in 0...2 {
+            centers.append(CGFloat(i + 1)*offset - 2.7*left)
+        }
+        
+        let (button1, myMedia) = Global.shared.tabButton("media", "My Media", view, centers[0], .white)
         button1.addTarget(self, action: #selector(showMyMedia), for: .touchUpInside)
         view.addSubview(myMedia)
         
-        let (button2, templates) = Global.shared.tabButton("templates", "Templates", view, view.center.x - 35, .white)
+        let (button2, templates) = Global.shared.tabButton("templates", "Templates", view, centers[1], .white)
         button2.addTarget(self, action: #selector(showTemplates), for: .touchUpInside)
         view.addSubview(templates)
         
-        let (button3, camera) = Global.shared.tabButton("camera", "Camera", view, view.center.x + 100, .white)
+        let (button3, camera) = Global.shared.tabButton("camera", "Camera", view, centers[2], .white)
         button3.addTarget(self, action: #selector(showCamera), for: .touchUpInside)
         view.addSubview(camera)
         
@@ -95,6 +102,8 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         self.view.addSubview(collectionView)
     }
     
+    // collection delegate
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.items.count
     }
@@ -105,6 +114,14 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         return cell
     }
 
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath)
+        dump(cell)
+        let editorVC = EditorViewController()
+        present(editorVC, animated: true, completion: nil)
+    }
+    // collection layout
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = (screenSize.width - leftAndRightPaddings)/numberOfItemsPerRow
         return CGSize(width: width, height: width * 1.5)
