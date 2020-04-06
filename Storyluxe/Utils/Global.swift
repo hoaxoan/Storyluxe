@@ -11,7 +11,9 @@ import UIKit
 
 class Global: NSObject {
     static let shared = Global()
-    private override init() {}
+    private override init() {
+//        UserDefaults.standard.removeObject(forKey: allTemplatesKey)
+    }
     
     // MARK: - UI elements
     
@@ -35,12 +37,12 @@ class Global: NSObject {
         return button
     }
     
-    func tabButton(_ image: String, _ name: String, _ view: UIView, _ x: CGFloat, _ tint: UIColor?, _ isSmall: Bool = false, _ isModal: Bool = false) -> (UIButton, UIView) {
+    func tabButton(_ image: String, _ name: String, _ view: UIView, _ x: CGFloat, _ tint: UIColor?, _ isSmall: Bool = false) -> (UIButton, UIView) {
         
         let width: CGFloat = isSmall ? 60 : 70
         
         let background = UIView(frame: CGRect(origin: .zero, size: CGSize(width: width, height: width + 25)))
-        background.center = CGPoint(x: x, y: view.frame.size.height - (width + (isModal ? 60 : 10)))
+        background.center = CGPoint(x: x, y: view.frame.height - width)
         background.backgroundColor = .clear
         
         let button = UIButton(frame: CGRect(origin: .zero, size: CGSize(width: width, height: width)))
@@ -70,30 +72,41 @@ class Global: NSObject {
         return imageView
     }
     
+    func lock(_ size: CGFloat) -> UIButton {
+        let lock = UIButton(frame: CGRect(origin: .zero, size: .init(width: size, height: size)))
+        lock.backgroundColor = veryLightGrayTint
+        lock.layer.cornerRadius = size/2
+        lock.layer.masksToBounds = true
+        lock.setImage(UIImage(named: "lock")?.tint(color: .darkGray), for: .normal)
+        lock.isEnabled = false
+        lock.layer.addShadow()
+        return lock
+    }
+    
     // MARK: - Collages
     
     func testCollages() -> [Collage] {
         return [Collage(id: UUID().uuidString,
                         isPremium: false,
-                        set: Frame(thumbnail: Image(withImage: UIImage(named: "brian")!),
+                        kit: Kit(thumbnail: Image(withImage: UIImage(named: "brian")!),
                                    template: Image(withImage: UIImage(named: "instant_1f")!),
                                    type: .one,
                                    aspect: .aspect9_16)),
                 Collage(id: UUID().uuidString,
                         isPremium: true,
-                        set: Frame(thumbnail: Image(withImage: UIImage(named: "nichole")!),
+                        kit: Kit(thumbnail: Image(withImage: UIImage(named: "nichole")!),
                                    template: Image(withImage: UIImage(named: "instant_2f")!),
                                    type: .two,
                                    aspect: .aspect9_16)),
                 Collage(id: UUID().uuidString,
                         isPremium: true,
-                        set: Frame(thumbnail: Image(withImage: UIImage(named: "brian")!),
+                        kit: Kit(thumbnail: Image(withImage: UIImage(named: "brian")!),
                                    template: Image(withImage: UIImage(named: "instant_3f")!),
                                    type: .three,
                                    aspect: .aspect9_16)),
                 Collage(id: UUID().uuidString,
                         isPremium: false,
-                        set: Frame(thumbnail: Image(withImage: UIImage(named: "nichole")!),
+                        kit: Kit(thumbnail: Image(withImage: UIImage(named: "nichole")!),
                                    template: Image(withImage: UIImage(named: "instant_4f")!),
                                    type: .four,
                                    aspect: .aspect9_16))]
@@ -136,22 +149,47 @@ class Global: NSObject {
                     Template(filename: "instant_3f", isPremium: false, type: .three, collage: testCollages()[3])]
         
         let flame = Image.init(withImage: UIImage(named: "flame")!.tint(color: pinkTint))
-        let sets = [TemplateSet(title: nil, image: flame, set: set1, installed: true),
-                    TemplateSet(title: "film", image: nil, set: set2, installed: true),
-                    TemplateSet(title: "love", image: nil, set: set1, installed: true),
-                    TemplateSet(title: "paper", image: nil, set: set2, installed: true),
-                    TemplateSet(title: "tape", image: nil, set: set1, installed: true),
-                    TemplateSet(title: "element", image: nil, set: set2, installed: true),
-                    TemplateSet(title: "collage", image: nil, set: set1, installed: true),
-                    TemplateSet(title: "neon", image: nil, set: set2, installed: true),
-                    TemplateSet(title: "edge", image: nil, set: set1, installed: false),
-                    TemplateSet(title: "flora", image: nil, set: set2, installed: false),
-                    TemplateSet(title: "moi", image: nil, set: set1, installed: false),
-                    TemplateSet(title: "later", image: nil, set: set2, installed: false),
-                    TemplateSet(title: "usa", image: nil, set: set1, installed: false),
-                    TemplateSet(title: "spooky", image: nil, set: set2, installed: false),
-                    TemplateSet(title: "holiday", image: nil, set: set1, installed: false),
-                    TemplateSet(title: "new year", image: nil, set: set2, installed: false)]
+        let sets = [TemplateSet(title: nil, image: flame, set: set1, installed: true, preview: nil),
+                    TemplateSet(title: "film", image: nil, set: set2, installed: true, preview: "filmPreview"),
+                    TemplateSet(title: "love", image: nil, set: set1, installed: true, preview: "lovePreview"),
+                    TemplateSet(title: "paper", image: nil, set: set2, installed: true, preview: nil),
+                    TemplateSet(title: "tape", image: nil, set: set1, installed: true, preview: "tapePreview"),
+                    TemplateSet(title: "element", image: nil, set: set2, installed: true, preview: "elementPreview"),
+                    TemplateSet(title: "collage", image: nil, set: set1, installed: true, preview: "collagePreview"),
+                    TemplateSet(title: "neon", image: nil, set: set2, installed: true, preview: "neonPreview"),
+                    TemplateSet(title: "edge", image: nil, set: set1, installed: false, preview: "edgePreview"),
+                    TemplateSet(title: "flora", image: nil, set: set2, installed: false, preview: "floraPreview"),
+                    TemplateSet(title: "moi", image: nil, set: set1, installed: false, preview: "moiPreview"),
+                    TemplateSet(title: "later", image: nil, set: set2, installed: false, preview: "laterPreview"),
+                    TemplateSet(title: "usa", image: nil, set: set1, installed: false, preview: "usaPreview"),
+                    TemplateSet(title: "spooky", image: nil, set: set2, installed: false, preview: nil),
+                    TemplateSet(title: "holiday", image: nil, set: set1, installed: false, preview: nil),
+                    TemplateSet(title: "new year", image: nil, set: set2, installed: false, preview: nil)]
+        
+        return sets
+    }
+    
+    func backdrops() -> [BackdropSet] {
+        
+        let set0 = [Backdrop(filename: "camera-2", isPremium: true, type: .camera),
+                    Backdrop(filename: "colors", isPremium: false, type: .colorPicker)]
+        let set1 = [Backdrop(filename: "aaron-burden-202486-unsplash_Normal", isPremium: true, type: .image),
+                    Backdrop(filename: "adam-birkett-256243-unsplash_Normal", isPremium: false, type: .image),
+                    Backdrop(filename: "aleks-dahlberg-246136-unsplash_Normal", isPremium: false, type: .image),
+                    Backdrop(filename: "andrew-ridley-76547-unsplash_Normal", isPremium: false, type: .image)]
+        let set2 = [Backdrop(filename: "andrzej-kryszpiniuk-421139-unsplash_Normal", isPremium: true, type: .image),
+                    Backdrop(filename: "angie-muldowney-79761-unsplash_Normal", isPremium: false, type: .image),
+                    Backdrop(filename: "annie-spratt-42051-unsplash_Normal", isPremium: false, type: .image),
+                    Backdrop(filename: "annie-spratt-191710-unsplash_Normal", isPremium: false, type: .image)]
+        let set3 = [Backdrop(filename: "annie-spratt-695480-unsplash_Normal", isPremium: true, type: .image),
+                    Backdrop(filename: "annie-spratt-746980-unsplash_Normal", isPremium: false, type: .image),
+                    Backdrop(filename: "benjamin-davies-331159-unsplash_Normal", isPremium: false, type: .image),
+                    Backdrop(filename: "bruno-nascimento-263722-unsplash_Normal", isPremium: false, type: .image)]
+        
+        let sets = [BackdropSet(title: "system", set: set0, installed: true),
+                    BackdropSet(title: "new", set: set1, installed: true),
+                    BackdropSet(title: "recent", set: set2, installed: true),
+                    BackdropSet(title: "popular", set: set3, installed: true)]
         
         return sets
     }
@@ -295,5 +333,38 @@ extension UIColor {
         }
 
         return nil
+    }
+}
+
+extension UIView {
+
+    func takeScreenshot() -> UIImage {
+
+        // Begin context
+        UIGraphicsBeginImageContextWithOptions(self.bounds.size, false, UIScreen.main.scale)
+
+        // Draw view in that context
+        drawHierarchy(in: self.bounds, afterScreenUpdates: true)
+
+        // And finally, get image
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+
+        if (image != nil) {
+            return image!
+        }
+        return UIImage()
+    }
+}
+
+extension UIApplication {
+    /// Checks if view hierarchy of application contains `UIRemoteKeyboardWindow` if it does, keyboard is presented
+    var isKeyboardPresented: Bool {
+        if let keyboardWindowClass = NSClassFromString("UIRemoteKeyboardWindow"),
+            self.windows.contains(where: { $0.isKind(of: keyboardWindowClass) }) {
+            return true
+        } else {
+            return false
+        }
     }
 }

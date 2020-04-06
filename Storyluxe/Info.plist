@@ -17,11 +17,15 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
-	<string>248</string>
+	<string>377</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>To shoot photo for collage.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>To save photo for collage posting.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>To select photo for collage.</string>
 	<key>UILaunchStoryboardName</key>

@@ -11,7 +11,7 @@ import Foundation
 struct Collage: Codable {
     var id: String
     var isPremium: Bool
-    var set: Frame
+    var kit: Kit
     
     var asDictionary : [String: Any] {
         let mirror = Mirror(reflecting: self)

@@ -10,16 +10,19 @@ import Foundation
 import UIKit
 
 struct Text: Codable {
+    var id: String = UUID().uuidString
     var text: String
     var color: Color
     var font: Font
     var alignment: Alignment
     var location: Location
+    var height: CGFloat = 100
+    var center: CGPoint = .zero
 }
 
 struct Location: Codable {
-    let x: Double
-    let y: Double
+    let x: CGFloat
+    let y: CGFloat
     
     func point() -> CGPoint {
         return CGPoint(x: x, y: y)

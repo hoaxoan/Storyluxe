@@ -92,8 +92,8 @@ class TemplateCollectionViewCell: UICollectionViewCell {
             default: break }
             
             if template!.isPremium {
+                let lock = Global.shared.lock(35)
                 lock.center = CGPoint(x: background.frame.maxX - 10, y: background.frame.minY + 10)
-                lock.layer.addShadow()
                 addSubview(lock)
             }
         }
@@ -116,17 +116,6 @@ class TemplateCollectionViewCell: UICollectionViewCell {
         imageView.contentMode = .scaleAspectFill
         imageView.layer.masksToBounds = true
         return imageView
-    }()
-
-    private let lock: UIView = {
-        let size: CGFloat = 35
-        let lock = UIButton(frame: CGRect(origin: .zero, size: .init(width: size, height: size)))
-        lock.backgroundColor = veryLightGrayTint
-        lock.layer.cornerRadius = size/2
-        lock.layer.masksToBounds = true
-        lock.setImage(UIImage(named: "lock")?.tint(color: .darkGray), for: .normal)
-        lock.isEnabled = false
-        return lock
     }()
     
     override var isSelected: Bool {

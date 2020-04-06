@@ -20,4 +20,5 @@ struct TemplateSet: Codable {
     var image: Image?
     var set: [Template]
     var installed: Bool
+    var preview: String?
 }

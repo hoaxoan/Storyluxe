@@ -116,13 +116,14 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellReuseIdentifier, for: indexPath) as! PreviewCollectionViewCell
-        cell.image = items[indexPath.item].set.thumbnail.getImage()
+        cell.image = items[indexPath.item].kit.thumbnail.getImage()
         return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let editorVC = EditorViewController()
         editorVC.collage = items[indexPath.item]
+        editorVC.modalPresentationStyle = .fullScreen
         present(editorVC, animated: true, completion: nil)
     }
     // collection layout
@@ -154,6 +155,7 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
     
     @objc func showTemplates() {
         let templatesVC = TemplatesViewController()
+        templatesVC.modalPresentationStyle = .fullScreen
         present(templatesVC, animated: true, completion: nil)
     }
     

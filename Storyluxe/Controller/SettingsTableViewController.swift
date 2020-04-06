@@ -10,12 +10,6 @@ import UIKit
 import MessageUI
 
 class SettingsTableViewController: UITableViewController {
-
-    let titles = [["Get Unlimited Access"],
-                  ["Storyluxe", "Nichole", "Brian", "Shop", "Terms of Use", "Privacy Policy", "Credits"],
-                  ["Contact Support", "Leave Rating"]]
-    
-    let images = ["icon-big", "brian", "nichole", "icon-big"]
     
     // MARK: - Lifecycle
     
@@ -50,7 +44,7 @@ class SettingsTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        titles.count
+        settingsTitles.count
     }
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -58,7 +52,7 @@ class SettingsTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return titles[section].count
+        return settingsTitles[section].count
     }
 
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -76,7 +70,7 @@ class SettingsTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        cell.textLabel?.text = titles[indexPath.section][indexPath.row]
+        cell.textLabel?.text = settingsTitles[indexPath.section][indexPath.row]
         cell.textLabel?.font = .systemFont(ofSize: 20)
         
         switch indexPath.section {
@@ -87,7 +81,7 @@ class SettingsTableViewController: UITableViewController {
             cell.textLabel?.textColor = indexPath.row < 4 ? .black : .gray
             cell.accessoryType = .disclosureIndicator
             if indexPath.row < 4 {
-                let image = images[indexPath.row]
+                let image = settingsImages[indexPath.row]
                 let size: CGFloat = 40
                 cell.imageView?.image = UIImage(named: image)?.resize(size)
                 cell.imageView?.layer.cornerRadius = size/2
@@ -107,7 +101,6 @@ class SettingsTableViewController: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
         
     }
-
 }
 
 // MARK: - Delegates
