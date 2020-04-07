@@ -15,6 +15,11 @@ let blueTint = UIColor(red: 114/255, green: 210/255, blue: 233/255, alpha: 1.0)
 let lightGrayTint = UIColor(white: 0.7, alpha: 1)
 let veryLightGrayTint = UIColor(white: 0.93, alpha: 1.0)
 
+// notifications
+extension Notification.Name {
+    static let closeColorPicker = Notification.Name("closeColorPickerNotification")
+}
+
 // keys
 let allTemplatesKey = "allTemplatesKey"
 let userCollagesKey = "userCollagesKey"

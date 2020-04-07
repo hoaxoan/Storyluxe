@@ -19,6 +19,10 @@
 		536D778F243451AE00601A24 /* TemplatesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536D778E243451AE00601A24 /* TemplatesViewController.swift */; };
 		536D7791243459F900601A24 /* TemplateCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536D7790243459F900601A24 /* TemplateCollectionViewCell.swift */; };
 		536D779424348C0700601A24 /* Collage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536D779324348C0700601A24 /* Collage.swift */; };
+		537A2268243B711600711168 /* ColorPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 537A2265243B711600711168 /* ColorPicker.swift */; };
+		537A2269243B711600711168 /* ColorPicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = 537A2266243B711600711168 /* ColorPicker.xib */; };
+		537A226A243B711600711168 /* ColorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 537A2267243B711600711168 /* ColorManager.swift */; };
+		537A226C243B736900711168 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 537A226B243B736900711168 /* UIColor.swift */; };
 		537DC5682434E56600FFD3C7 /* PurchaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 537DC5672434E56600FFD3C7 /* PurchaseViewController.swift */; };
 		53BA030F24320D7700286967 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BA030E24320D7700286967 /* Global.swift */; };
 		53BA0314243216C600286967 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BA0313243216C600286967 /* SettingsTableViewController.swift */; };
@@ -46,6 +50,10 @@
 		536D778E243451AE00601A24 /* TemplatesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplatesViewController.swift; sourceTree = "<group>"; };
 		536D7790243459F900601A24 /* TemplateCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateCollectionViewCell.swift; sourceTree = "<group>"; };
 		536D779324348C0700601A24 /* Collage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Collage.swift; sourceTree = "<group>"; };
+		537A2265243B711600711168 /* ColorPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorPicker.swift; sourceTree = "<group>"; };
+		537A2266243B711600711168 /* ColorPicker.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ColorPicker.xib; sourceTree = "<group>"; };
+		537A2267243B711600711168 /* ColorManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorManager.swift; sourceTree = "<group>"; };
+		537A226B243B736900711168 /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		537DC5672434E56600FFD3C7 /* PurchaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseViewController.swift; sourceTree = "<group>"; };
 		53BA030E24320D7700286967 /* Global.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
 		53BA0313243216C600286967 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
@@ -131,6 +139,17 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		537A2264243B70F900711168 /* ColorPicker */ = {
+			isa = PBXGroup;
+			children = (
+				537A226B243B736900711168 /* UIColor.swift */,
+				537A2267243B711600711168 /* ColorManager.swift */,
+				537A2265243B711600711168 /* ColorPicker.swift */,
+				537A2266243B711600711168 /* ColorPicker.xib */,
+			);
+			path = ColorPicker;
+			sourceTree = "<group>";
+		};
 		53BA03102432155200286967 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -149,6 +168,7 @@
 		53E6785D2431F7E000E195AE /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				537A2264243B70F900711168 /* ColorPicker */,
 				53E6785E2431F7F400E195AE /* Constants.swift */,
 				53BA030E24320D7700286967 /* Global.swift */,
 			);
@@ -254,6 +274,7 @@
 				53E9EA1F2430FB9D00BC1B3E /* LaunchScreen.storyboard in Resources */,
 				53653AA72432361B00F3E5FB /* help_en.rtf in Resources */,
 				53DB1C1924363FA40005E167 /* Backdrops in Resources */,
+				537A2269243B711600711168 /* ColorPicker.xib in Resources */,
 				53E9EA1C2430FB9D00BC1B3E /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -324,12 +345,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				537A226A243B711600711168 /* ColorManager.swift in Sources */,
 				531F4D4C2434BCB700B8FA04 /* Template.swift in Sources */,
 				53BA030F24320D7700286967 /* Global.swift in Sources */,
 				53653AA52432360B00F3E5FB /* RTFViewController.swift in Sources */,
 				537DC5682434E56600FFD3C7 /* PurchaseViewController.swift in Sources */,
 				53BA0314243216C600286967 /* SettingsTableViewController.swift in Sources */,
 				53D7A2F524327B52006013C1 /* EditorViewController.swift in Sources */,
+				537A226C243B736900711168 /* UIColor.swift in Sources */,
 				536D7791243459F900601A24 /* TemplateCollectionViewCell.swift in Sources */,
 				536D779424348C0700601A24 /* Collage.swift in Sources */,
 				53653AAE24323B2D00F3E5FB /* PreviewCollectionViewCell.swift in Sources */,
@@ -341,6 +364,7 @@
 				53DB1C142435E4F90005E167 /* InstallViewController.swift in Sources */,
 				53E9EA132430FB9B00BC1B3E /* AppDelegate.swift in Sources */,
 				536D778F243451AE00601A24 /* TemplatesViewController.swift in Sources */,
+				537A2268243B711600711168 /* ColorPicker.swift in Sources */,
 				53DB1C16243628290005E167 /* Backdrop.swift in Sources */,
 				53E6785F2431F7F400E195AE /* Constants.swift in Sources */,
 			);

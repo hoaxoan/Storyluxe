@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ColorPicker" customModule="Storyluxe" customModuleProvider="target">
+            <connections>
+                <outlet property="actionButton" destination="RbP-eA-kfu" id="1i7-Fv-iJw"/>
+                <outlet property="cancelButton" destination="rKf-Qi-Ue1" id="dod-Lp-zj1"/>
+                <outlet property="colorButton" destination="YmZ-4B-49z" id="2Dh-RI-Tx6"/>
+                <outlet property="colorView" destination="p85-u0-MJa" id="FHA-mO-bG1"/>
+                <outlet property="contentView" destination="iN0-l3-epB" id="3AE-2a-C3A"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="355" height="280"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YmZ-4B-49z">
+                    <rect key="frame" x="95" y="65" width="227" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="Lcf-6m-5ug"/>
+                    </constraints>
+                    <state key="normal" title="Button"/>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RbP-eA-kfu">
+                    <rect key="frame" x="32" y="147" width="290" height="45"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="45" id="hIA-qG-Ihx"/>
+                    </constraints>
+                    <state key="normal" title="Button"/>
+                    <connections>
+                        <action selector="actionPressed" destination="-1" eventType="touchUpInside" id="SWz-cd-9Qc"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rKf-Qi-Ue1">
+                    <rect key="frame" x="32" y="202" width="290" height="45"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="45" id="kcR-Y2-EUl"/>
+                    </constraints>
+                    <state key="normal" title="Button"/>
+                    <connections>
+                        <action selector="closeView" destination="-1" eventType="touchUpInside" id="hal-sE-40o"/>
+                    </connections>
+                </button>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="p85-u0-MJa">
+                    <rect key="frame" x="32" y="60" width="40" height="40"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="IKx-rV-KKc"/>
+                        <constraint firstAttribute="width" constant="40" id="tqz-kb-qjI"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
+            <gestureRecognizers/>
+            <constraints>
+                <constraint firstItem="rKf-Qi-Ue1" firstAttribute="top" secondItem="RbP-eA-kfu" secondAttribute="bottom" constant="10" id="2wH-LS-r0Y"/>
+                <constraint firstItem="p85-u0-MJa" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="60" id="5yj-oo-Zyl"/>
+                <constraint firstItem="rKf-Qi-Ue1" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="32" id="DpV-9V-lLG"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="RbP-eA-kfu" secondAttribute="trailing" constant="33" id="EB6-9T-afP"/>
+                <constraint firstItem="p85-u0-MJa" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="32" id="F2K-Fr-xup"/>
+                <constraint firstItem="YmZ-4B-49z" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="65" id="WEy-IM-IDS"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="rKf-Qi-Ue1" secondAttribute="bottom" constant="33" id="e8e-Kg-2ol"/>
+                <constraint firstItem="YmZ-4B-49z" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="95" id="oG0-bj-MEd"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="YmZ-4B-49z" secondAttribute="trailing" constant="33" id="pWO-C5-bcj"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="rKf-Qi-Ue1" secondAttribute="trailing" constant="33" id="so2-Gs-AqT"/>
+                <constraint firstItem="RbP-eA-kfu" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="32" id="yjF-tj-17M"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <connections>
+                <outletCollection property="gestureRecognizers" destination="9Jq-Wr-Aye" appends="YES" id="DkS-PQ-RL8"/>
+            </connections>
+            <point key="canvasLocation" x="138.40579710144928" y="153.34821428571428"/>
+        </view>
+        <tapGestureRecognizer id="9Jq-Wr-Aye">
+            <connections>
+                <action selector="hideKeyboard" destination="-1" id="BIr-Ty-Evg"/>
+                <outlet property="delegate" destination="-1" id="ktu-xv-EUI"/>
+            </connections>
+        </tapGestureRecognizer>
+    </objects>
+</document>

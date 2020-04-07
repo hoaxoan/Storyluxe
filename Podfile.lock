@@ -1,16 +1,20 @@
 PODS:
   - BRYXBanner (0.8.4)
+  - ColorSlider (4.4)
 
 DEPENDENCIES:
   - BRYXBanner
+  - ColorSlider
 
 SPEC REPOS:
   trunk:
     - BRYXBanner
+    - ColorSlider
 
 SPEC CHECKSUMS:
   BRYXBanner: 4fbd266f96ce000e4c6cc9a0558c446bd88d9801
+  ColorSlider: 9a888e65b871fa1e6a26fadebf4931c949935681
 
-PODFILE CHECKSUM: e1301035da2d60001c7db23b935faaefb75f56c2
+PODFILE CHECKSUM: 1eb90c24175d466c4443f7d5f93ab9d023bc5781
 
 COCOAPODS: 1.9.1

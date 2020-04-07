@@ -41,7 +41,7 @@ class EditorViewController: UIViewController {
     let backdrop = UIImageView()
     
     // gesture regognizers for container views
-    lazy var tapRecognizer: UITapGestureRecognizer = {
+    lazy var hideScrollviewRecognizer: UITapGestureRecognizer = {
         let gesture = UITapGestureRecognizer()
         gesture.addTarget(self, action: #selector(backdropHide))
         return gesture
@@ -53,7 +53,7 @@ class EditorViewController: UIViewController {
         return gesture
     }()
     
-    lazy var backdropScrollView: UIScrollView = {
+    lazy var selectScrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.backgroundColor = blackTint
         scrollView.frame = CGRect(x: 0, y: view.bounds.height, width: view.frame.width, height: 3*scrollHeight)
@@ -79,7 +79,7 @@ class EditorViewController: UIViewController {
             button.layer.borderWidth = 2
 //            button.layer.addShadow()
             button.layer.masksToBounds = true
-            button.addTarget(self, action: #selector(backdropTapped(_:)), for: .touchUpInside)
+            button.addTarget(self, action: #selector(backdropSelected(_:)), for: .touchUpInside)
             scrollView.addSubview(button)
             
             if backdrop.isPremium {
@@ -111,17 +111,22 @@ class EditorViewController: UIViewController {
         return slider
     }()
     
+    var colorButton = UIButton()
+    var colorPicker: UIView? = nil
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        NotificationCenter.default.addObserver(self, selector: #selector(closeColorPicker), name: .closeColorPicker, object: nil)
+        
         view.tintColor = pinkTint
         view.backgroundColor = blackTint
         setupInitialButtons()
         setupTextEditButtons()
-        container.addGestureRecognizer(tapRecognizer)
-        view.addSubview(backdropScrollView)
+        container.addGestureRecognizer(hideScrollviewRecognizer)
+        view.addSubview(selectScrollView)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -131,9 +136,10 @@ class EditorViewController: UIViewController {
     
     // MARK: - UI
     
+    // MARK: Initial buttons
+    
     func setupInitialButtons() {
-        // top buttons
-        
+
         // more
         let more = Global.shared.button("more-vertical", CGRect(origin: CGPoint(x: 20, y: top), size: size), lightGrayTint, .small)
         more.addTarget(self, action: #selector(menu), for: .touchUpInside)
@@ -228,12 +234,14 @@ class EditorViewController: UIViewController {
         layoutTexts()
     }
     
+    // MARK: Text Edit buttons
+    
     func setupTextEditButtons() {
         // top buttons
         
         // more
         let more = Global.shared.button("trash", CGRect(origin: CGPoint(x: 20, y: top), size: size), lightGrayTint, .normal)
-        more.addTarget(self, action: #selector(menu), for: .touchUpInside)
+        more.addTarget(self, action: #selector(deleteText), for: .touchUpInside)
         textEditButtons.addSubview(more)
         
         // text
@@ -252,20 +260,22 @@ class EditorViewController: UIViewController {
         let offset = view.frame.width/3
         var centers = [CGFloat]()
         for i in 0...2 {
-            centers.append(CGFloat(i + 1)*offset - 1.5*left)
+            centers.append(CGFloat(i + 1)*offset - 2.5*left)
         }
         
-        let (button1, border) = Global.shared.tabButton("borders", "Borders", view, centers[0], .white, true)
-        button1.addTarget(self, action: #selector(borders), for: .touchUpInside)
+        let (button1, border) = Global.shared.tabButton("circle", "Color", view, centers[0], getFieldColor(), true)
+        colorButton = button1
+        colorButton.addTarget(self, action: #selector(colorTapped), for: .touchUpInside)
         textEditButtons.addSubview(border)
         
-        let (button2, brand) = Global.shared.tabButton("icon-trans", "Branding", view, centers[1], nil, true)
-        button2.addTarget(self, action: #selector(branding), for: .touchUpInside)
+        let (button2, brand) = Global.shared.tabButton("icon-trans", "Font", view, centers[1], nil, true)
+        button2.addTarget(self, action: #selector(fontTapped), for: .touchUpInside)
         textEditButtons.addSubview(brand)
 
-        let (button3, templates) = Global.shared.tabButton("templates", "Templates", view, centers[2], .white, true)
-        button3.addTarget(self, action: #selector(templateTapped), for: .touchUpInside)
+        let (button3, templates) = Global.shared.tabButton("pencil", "Edit", view, centers[2], .white, true)
+        button3.addTarget(self, action: #selector(editField), for: .touchUpInside)
         textEditButtons.addSubview(templates)
+        
         textEditButtons.addGestureRecognizer(endEditRecognizer)
         
         view.addSubview(textEditButtons)
@@ -277,10 +287,11 @@ class EditorViewController: UIViewController {
     
     @objc func endEditing() {
         view.endEditing(true)
+        view.subviews.forEach{ if $0 is UITextField {$0.layer.borderWidth = 0} }
+        toggleInterface(false)
     }
     
     func toggleInterface(_ isEditing: Bool) {
-        
         initialButtons.isHidden = isEditing
         textEditButtons.isHidden = !isEditing
         
@@ -291,7 +302,7 @@ class EditorViewController: UIViewController {
         }
     }
     
-    // MARK: - Button actions
+    // MARK: - Initial button actions
     
     // top buttons
     
@@ -338,33 +349,13 @@ class EditorViewController: UIViewController {
         present(templatesVC, animated: true, completion: nil)
     }
     
-    @objc func backdropShow() {
-        guard backdropScrollView.frame.origin.y == view.bounds.height else { return }
-        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn, animations: {
-            self.backdropScrollView.frame.origin.y = self.view.bounds.height - 3*self.scrollHeight
-            self.view.setNeedsLayout()
-        }) { _ in
-            self.toggleInterface(false)
-        }
-    }
-    
-    @objc func backdropHide() {
-        guard backdropScrollView.frame.origin.y < view.bounds.height else { return }
-        
-        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn, animations: {
-            self.backdropScrollView.frame.origin.y = self.view.bounds.height
-            self.view.setNeedsLayout()
-        }) { _ in
-            self.toggleInterface(false)
-        }
-    }
-    
     @objc func exportTapped() {
         let exportImage = container.takeScreenshot()
         UIImageWriteToSavedPhotosAlbum(exportImage, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
     }
     
     //MARK: - Add image to Library
+    
     @objc func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
         if let error = error {
             showAlertWith(title: "Save error", message: error.localizedDescription)
@@ -381,6 +372,7 @@ class EditorViewController: UIViewController {
     
     // MARK: - Text editing
     
+    // add new text field
     @objc func newTextTapped() {
         var text = Text(text: "",
                         color: Color(hex: "#FFFFFFFF"),
@@ -389,33 +381,18 @@ class EditorViewController: UIViewController {
                         location: Location(x: 0, y: view.frame.height/2))
         text.center = view.center
         texts.append(text)
-        activateField(text)
-    }
-    
-    func activateField(_ text: Text) {
+        
         let field = textField(text)
         view.addSubview(field)
         field.becomeFirstResponder()
     }
     
+    // get current active field
     func activeField() -> UITextField? {
         return view.subviews.first(where: {$0 is UITextField && $0.isFirstResponder}) as? UITextField
     }
     
-    @objc func updateFontSize(_ sender: UISlider) {
-        
-        if let field = activeField(), let font = field.font {
-            field.font = UIFont(name: font.fontName, size: CGFloat(sender.value))
-            
-            if field.tag < texts.count {
-                var text = texts[field.tag]
-                let font = text.font.font()
-                text.font = Font(name: font.fontName, size: CGFloat(sender.value))
-                self.texts[field.tag] = text
-            }
-        }
-    }
-    
+    // construct a field
     func textField(_ text: Text) -> UITextField {
         let textField = UITextField(frame: CGRect(origin: text.location.point(), size: CGSize(width: view.frame.width, height: text.height)))
         textField.text = text.text
@@ -428,12 +405,6 @@ class EditorViewController: UIViewController {
         return textField
     }
     
-//    func updateText(_ text: Text) {
-//        if let index = texts.firstIndex(where: {$0.id == text.id}) {
-//            texts[index] = text
-//        }
-//    }
-    
     func layoutTexts() {
         view.subviews.forEach{ if $0 is UITextField {$0.removeFromSuperview()} }
         for (index, text) in texts.filter({ !$0.text.isEmpty }).enumerated() {
@@ -441,14 +412,42 @@ class EditorViewController: UIViewController {
             field.sizeToFit()
             field.frame.size.width += 20
             field.layer.borderColor = UIColor.black.cgColor
-            field.layer.borderWidth = 1
+            field.layer.borderWidth = 0
             field.center = text.center
             field.tag = index
             field.isUserInteractionEnabled = true
             field.addGestureRecognizer(panRecognizer())
+            field.addGestureRecognizer(tapRecognizer())
             view.addSubview(field)
         }
     }
+    
+    // MARK: Tap recognizer
+    
+    func tapRecognizer() -> UITapGestureRecognizer {
+        let gesture = UITapGestureRecognizer()
+        gesture.addTarget(self, action: #selector(selectTextField(_:)))
+        return gesture
+    }
+    
+    @objc func selectTextField(_ sender: UITapGestureRecognizer) {
+        if let field = sender.view as? UITextField {
+            if field.layer.borderWidth > 0.0 {
+                field.becomeFirstResponder()
+            }
+            else {
+                view.subviews.forEach{ if $0 is UITextField {$0.layer.borderWidth = 0} }
+                view.bringSubviewToFront(field)
+                field.layer.borderColor = UIColor.black.cgColor
+                field.layer.borderWidth = 1
+                colorButton.setImage(UIImage(named: "circle")?.tint(color: getFieldColor()).resize(30), for: .normal)
+            }
+            initialButtons.isHidden = true
+            textEditButtons.isHidden = false
+        }
+    }
+    
+    // MARK: Pan recognizer
     
     func panRecognizer() -> UIPanGestureRecognizer {
         let gesture = UIPanGestureRecognizer()
@@ -471,9 +470,114 @@ class EditorViewController: UIViewController {
         }
     }
     
+    // MARK: Color picker
+    
+    @objc func colorTapped() {
+        if colorPicker == nil {
+            colorPicker = UIView(frame: view.frame)
+            colorPicker?.layer.backgroundColor = UIColor(white: 0, alpha: 0.5).cgColor
+            if let info = ColorManager.shared.colorPicker() {
+                info.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(closeColorPicker)))
+                colorPicker?.addSubview(info)
+                UIApplication.shared.keyWindow?.addSubview(colorPicker!)
+                UIView.animate(withDuration: 0.5) { info.alpha = 1 }
+            }
+        }
+    }
+    
+    @objc func closeColorPicker(_ notification: Notification?) {
+        if colorPicker != nil {
+    
+            if let object = notification?.object as? [String: Any], let color = object["color"] as? String {
+                print(#function, color)
+                if let field = view.subviews.first(where: {$0.layer.borderWidth > 0}) as? UITextField {
+                    var text = texts[field.tag]
+                    text.color = Color(hex: color)
+                    texts[field.tag] = text
+                    field.textColor = UIColor(hex: color)
+                    collage?.kit.texts = texts.filter{ !$0.text.isEmpty }
+                    toggleInterface(false)
+                }
+            }
+            UIView.animate(withDuration: 0.5, animations: {
+                self.colorPicker?.alpha = 0
+            }) { _ in
+                self.colorPicker?.removeFromSuperview()
+                self.colorPicker = nil
+            }
+        }
+    }
+    
+    func getFieldColor() -> UIColor {
+        var color = UIColor.gray
+        if let field = view.subviews.first(where: {$0.layer.borderWidth > 0}) as? UITextField {
+            let text = texts[field.tag]
+            color = text.color.color()
+        }
+        return color
+    }
+    
+    // MARK: Font picker
+    
+    @objc func fontTapped() {
+        
+    }
+    
+    // MARK: Other
+    
+    @objc func deleteText() {
+        if let field = view.subviews.first(where: {$0.layer.borderWidth > 0}) as? UITextField, field.tag < texts.count {
+            texts.remove(at: field.tag)
+            toggleInterface(false)
+        }
+    }
+    
+    @objc func editField() {
+        if let field = view.subviews.first(where: {$0.layer.borderWidth > 0}) as? UITextField {
+            field.becomeFirstResponder()
+        }
+    }
+    
+    // MARK: - Slider action
+    
+    @objc func updateFontSize(_ sender: UISlider) {
+        
+        if let field = activeField(), let font = field.font {
+            field.font = UIFont(name: font.fontName, size: CGFloat(sender.value))
+            
+            if field.tag < texts.count {
+                var text = texts[field.tag]
+                let font = text.font.font()
+                text.font = Font(name: font.fontName, size: CGFloat(sender.value))
+                self.texts[field.tag] = text
+            }
+        }
+    }
+    
     // MARK: - Backdrop
     
-    @objc func backdropTapped(_ sender: UIButton) {
+    @objc func backdropShow() {
+        guard selectScrollView.frame.origin.y == view.bounds.height else { return }
+        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn, animations: {
+            self.selectScrollView.frame.origin.y = self.view.bounds.height - 3*self.scrollHeight
+            self.view.setNeedsLayout()
+        }) { _ in
+            self.toggleInterface(false)
+        }
+    }
+    
+    @objc func backdropHide() {
+        guard selectScrollView.frame.origin.y < view.bounds.height else { return }
+        
+        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn, animations: {
+            self.selectScrollView.frame.origin.y = self.view.bounds.height
+            self.view.setNeedsLayout()
+        }) { _ in
+            self.toggleInterface(false)
+        }
+    }
+    
+    @objc func backdropSelected(_ sender: UIButton) {
         let index = sender.tag
         let set = Global.shared.backdrops().flatMap({$0.set})[index]
         if set.isPremium {
