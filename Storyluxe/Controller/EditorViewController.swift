@@ -470,7 +470,22 @@ class EditorViewController: UIViewController {
         }
     }
     
-    // MARK: Color picker
+    // MARK: Other
+    
+    @objc func deleteText() {
+        if let field = view.subviews.first(where: {$0.layer.borderWidth > 0}) as? UITextField, field.tag < texts.count {
+            texts.remove(at: field.tag)
+            toggleInterface(false)
+        }
+    }
+    
+    @objc func editField() {
+        if let field = view.subviews.first(where: {$0.layer.borderWidth > 0}) as? UITextField {
+            field.becomeFirstResponder()
+        }
+    }
+    
+    // MARK: - Color picker
     
     @objc func colorTapped() {
         if colorPicker == nil {
@@ -517,25 +532,52 @@ class EditorViewController: UIViewController {
         return color
     }
     
-    // MARK: Font picker
+    // MARK: - Font picker
+    
+    // Views
+    let tableCellIdentifier = "TableCell"
+    var fontNames = [[String: String]]()
+    
+    lazy var tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.frame = CGRect(origin: .zero, size: CGSize(width: view.frame.width, height: view.frame.height))
+        tableView.backgroundColor = .black
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: tableCellIdentifier)
+        tableView.isHidden = true
+        return tableView
+    }()
     
     @objc func fontTapped() {
+        fontNames.removeAll()
+        for family in UIFont.familyNames {
+            let sName: String = family as String
+            for name in UIFont.fontNames(forFamilyName: sName) {
+                if !name.hasSuffix("Bold") &&
+                    !name.hasSuffix("Italic") &&
+                    !name.hasSuffix("Black") &&
+                    !name.hasSuffix("Light") &&
+                    !name.hasSuffix("Medium") &&
+                    !name.hasSuffix("Heavy") &&
+                    !name.hasSuffix("Thin") &&
+                    !name.hasSuffix("ItalicMT") &&
+                    !name.hasSuffix("BoldMT") &&
+                    !name.hasSuffix("Oblique") &&
+                    !name.hasSuffix("Semibold") &&
+                    !name.hasSuffix("Ultralight") &&
+                    !name.hasSuffix("Condensed") &&
+                    !name.hasSuffix("BookIt") {
+                    fontNames.append(["family": sName, "name": name])
+//                    print("family name: \(sName as String), name: \(name as String)")
+                }
+            }
+        }
+        fontNames = fontNames.sorted{ $0["family"]!.lowercased() < $1["family"]!.lowercased() }
+        print("names: \(fontNames)")
         
-    }
-    
-    // MARK: Other
-    
-    @objc func deleteText() {
-        if let field = view.subviews.first(where: {$0.layer.borderWidth > 0}) as? UITextField, field.tag < texts.count {
-            texts.remove(at: field.tag)
-            toggleInterface(false)
-        }
-    }
-    
-    @objc func editField() {
-        if let field = view.subviews.first(where: {$0.layer.borderWidth > 0}) as? UITextField {
-            field.becomeFirstResponder()
-        }
+        view.addSubview(tableView)
+        tableView.isHidden = false
     }
     
     // MARK: - Slider action
@@ -593,7 +635,7 @@ class EditorViewController: UIViewController {
     }
 }
 
-// MARK: - Extensions & Delegates
+// MARK: - UITextFieldDelegate
 
 extension EditorViewController: UITextFieldDelegate {
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
@@ -624,5 +666,39 @@ extension EditorViewController: UITextFieldDelegate {
         }
         toggleInterface(false)
         return true
+    }
+}
+
+// MARK: - UITableViewDelegate, UITableViewDataSource
+
+extension EditorViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        fontNames.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: tableCellIdentifier, for: indexPath)
+        cell.backgroundColor = .black
+        let fontName = fontNames[indexPath.row]
+        cell.textLabel?.text = fontName["family"]
+        cell.textLabel?.textAlignment = .center
+        cell.textLabel?.textColor = pinkTint
+        cell.textLabel?.font = UIFont(name: fontName["name"]!, size: 25)
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let fontName = fontNames[indexPath.row]
+        if let field = view.subviews.first(where: {$0.layer.borderWidth > 0}) as? UITextField, let size = field.font?.pointSize {
+            var text = texts[field.tag]
+            text.font = Font(name: fontName["name"]!, size: size)
+            texts[field.tag] = text
+            field.font = UIFont(name: fontName["name"]!, size: size)
+            collage?.kit.texts = texts.filter{ !$0.text.isEmpty }
+            toggleInterface(false)
+        }
+        tableView.isHidden = true
     }
 }
