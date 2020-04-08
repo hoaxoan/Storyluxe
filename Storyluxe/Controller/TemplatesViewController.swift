@@ -11,8 +11,8 @@ import UIKit
 class TemplatesViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UICollectionViewDelegate {
     
     // Views
-    let tableCellIdentifier = "TableCell"
-    lazy var tableView: UITableView = {
+    private let tableCellIdentifier = "TableCell"
+    private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.frame = CGRect(origin: .zero, size: CGSize(width: view.frame.width, height: view.frame.height - 99))
         tableView.backgroundColor = .black
@@ -24,23 +24,23 @@ class TemplatesViewController: UIViewController, UICollectionViewDataSource, UIC
     }()
     
     // collection view
-    let leftAndRightPaddings: CGFloat = 40.0
-    let numberOfItemsPerRow: CGFloat = 2.0
-    let screenSize = UIScreen.main.bounds
+    private let leftAndRightPaddings: CGFloat = 40.0
+    private let numberOfItemsPerRow: CGFloat = 2.0
+    private let screenSize = UIScreen.main.bounds
     private let cellReuseIdentifier = "CollectionCell"
-    var sets = [TemplateSet]()
+    private var sets = [TemplateSet]()
     
     // sizes
-    let size = CGSize(width: 35, height: 35)
-    let top: CGFloat = 15
-    let height: CGFloat = 40
-    var previousButton: UIButton?
-    var previousSubButton: UIButton?
-    var series = UIButton()
+    private let size = CGSize(width: 35, height: 35)
+    private let top: CGFloat = 50
+    private let height: CGFloat = 40
+    private var previousButton: UIButton?
+    private var previousSubButton: UIButton?
+    private var series = UIButton()
     
-    let mainScrollView = UIScrollView()
-    let toolbarScrollView = UIScrollView()
-    let subtoolbarScrollView = UIScrollView()
+    private let mainScrollView = UIScrollView()
+    private let toolbarScrollView = UIScrollView()
+    private let subtoolbarScrollView = UIScrollView()
     
     // MARK: - Lifecycle
     
@@ -61,7 +61,7 @@ class TemplatesViewController: UIViewController, UICollectionViewDataSource, UIC
     
     // MARK: - UI
     
-    func updateUI() {
+    private func updateUI() {
         sets = Global.shared.testSets()
         if let items = Global.shared.restore(allTemplatesKey) as [TemplateSet]?, items.count > 0 {
             sets = items
@@ -70,7 +70,7 @@ class TemplatesViewController: UIViewController, UICollectionViewDataSource, UIC
         setupScrollView()
     }
     
-    func setupTitle() {
+    private func setupTitle() {
         let width: CGFloat = view.frame.width - 80
         let label = UILabel(frame: CGRect(origin: CGPoint(x: 40, y: top), size: CGSize(width: width, height: size.height)))
         label.textAlignment = .center
@@ -84,11 +84,11 @@ class TemplatesViewController: UIViewController, UICollectionViewDataSource, UIC
         view.addSubview(dismiss)
     }
     
-    func setupScrollView() {
+    private func setupScrollView() {
         mainScrollView.subviews.forEach{ $0.removeFromSuperview() }
         
         let height = view.frame.height - 180
-        mainScrollView.frame = CGRect(x: 0, y: 65, width: view.frame.width, height: height)
+        mainScrollView.frame = CGRect(x: 0, y: 90, width: view.frame.width, height: height)
         mainScrollView.isPagingEnabled = true
 
         let allSets = sets.filter {$0.installed }
@@ -99,7 +99,7 @@ class TemplatesViewController: UIViewController, UICollectionViewDataSource, UIC
         view.addSubview(mainScrollView)
     }
     
-    func setupCollectionView(_ index: CGFloat) {
+    private func setupCollectionView(_ index: CGFloat) {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.minimumLineSpacing = 20
         let frame = CGRect(x: view.frame.width * index, y: 0, width: view.frame.width, height: mainScrollView.frame.height)
@@ -112,10 +112,10 @@ class TemplatesViewController: UIViewController, UICollectionViewDataSource, UIC
         mainScrollView.addSubview(collectionView)
     }
     
-    func setupToolbar() {
+    private func setupToolbar() {
         toolbarScrollView.subviews.forEach{ $0.removeFromSuperview() }
         
-        let bottomY = view.bounds.height - height - 70
+        let bottomY = view.bounds.height - height - 40
         toolbarScrollView.backgroundColor = blackTint
         toolbarScrollView.frame = CGRect(x: 10, y: bottomY, width: view.frame.width - 30 - height, height: height)
         
@@ -242,21 +242,6 @@ class TemplatesViewController: UIViewController, UICollectionViewDataSource, UIC
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let allSets = sets.filter {$0.installed }
-        let set = allSets[indexPath.section].set
-        if set[indexPath.item].isPremium {
-            let purchaseVC = PurchaseViewController()
-            present(purchaseVC, animated: true, completion: nil)
-        }
-        else {
-            let editorVC = EditorViewController()
-            editorVC.collage = set[indexPath.item].collage
-            editorVC.modalPresentationStyle = .fullScreen
-            present(editorVC, animated: true, completion: nil)
-        }
-    }
-    
     // collection layout
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -266,6 +251,21 @@ class TemplatesViewController: UIViewController, UICollectionViewDataSource, UIC
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 20, left: 8, bottom: 20, right: 8)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let allSets = sets.filter {$0.installed }
+        let set = allSets[indexPath.section].set
+        if set[indexPath.item].isPremium {
+            let purchaseVC = PurchaseViewController()
+            present(purchaseVC, animated: true, completion: nil)
+        }
+        else {
+            let editorVC = EditorViewController()
+            editorVC.template = set[indexPath.item]
+            editorVC.modalPresentationStyle = .fullScreen
+            present(editorVC, animated: true, completion: nil)
+        }
     }
     
     // MARK: - Actions

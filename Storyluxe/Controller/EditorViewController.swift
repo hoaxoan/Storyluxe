@@ -7,53 +7,54 @@
 //
 
 import UIKit
+import ColorSlider
 
 class EditorViewController: UIViewController {
-
-    var isModernAspect = true
-    var aspect = UIButton()
-    var aspectCenter: CGPoint = .zero
+    
+    private var isModernAspect = true
+    private var aspect = UIButton()
+    private var aspectCenter: CGPoint = .zero
     
     // sizes
-    let size = CGSize(width: 35, height: 35)
-    let top: CGFloat = 50
-    let left: CGFloat = 25
-    let scrollHeight: CGFloat = 40
+    private let size = CGSize(width: 35, height: 35)
+    private let top: CGFloat = 50
+    private let left: CGFloat = 25
+    private let scrollHeight: CGFloat = 40
     
     // button containers
-    lazy var initialButtons: UIView = {
-        let buttonsView = UIView(frame: view.frame)
+    private lazy var initialButtonsView: PassthroughView = {
+        let buttonsView = PassthroughView(frame: view.frame)
         buttonsView.backgroundColor = .clear
         buttonsView.isHidden = false
         return buttonsView
     }()
     
-    lazy var textEditButtons: UIView = {
-        let buttonsView = UIView(frame: view.frame)
+    private lazy var textEditButtonsView: PassthroughView = {
+        let buttonsView = PassthroughView(frame: view.frame)
         buttonsView.backgroundColor = .clear
         buttonsView.isHidden = true
         return buttonsView
     }()
     
     // collage parts
-    var container = UIView()
-    var template = UIImageView()
-    let backdrop = UIImageView()
+    private var containerView = UIView()
+    private var templateImageView = UIImageView()
+    private let backdropImageView = UIImageView()
     
     // gesture regognizers for container views
-    lazy var hideScrollviewRecognizer: UITapGestureRecognizer = {
+    private lazy var hideScrollviewRecognizer: UITapGestureRecognizer = {
         let gesture = UITapGestureRecognizer()
-        gesture.addTarget(self, action: #selector(backdropHide))
+        gesture.addTarget(self, action: #selector(hideEditors))
         return gesture
     }()
     
-    lazy var endEditRecognizer: UITapGestureRecognizer = {
+    private lazy var endEditRecognizer: UITapGestureRecognizer = {
         let gesture = UITapGestureRecognizer()
         gesture.addTarget(self, action: #selector(endEditing))
         return gesture
     }()
     
-    lazy var selectScrollView: UIScrollView = {
+    private lazy var selectScrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.backgroundColor = blackTint
         scrollView.frame = CGRect(x: 0, y: view.bounds.height, width: view.frame.width, height: 3*scrollHeight)
@@ -77,7 +78,7 @@ class EditorViewController: UIViewController {
             button.layer.cornerRadius = 7
             button.layer.borderColor = UIColor.gray.cgColor
             button.layer.borderWidth = 2
-//            button.layer.addShadow()
+            //            button.layer.addShadow()
             button.layer.masksToBounds = true
             button.addTarget(self, action: #selector(backdropSelected(_:)), for: .touchUpInside)
             scrollView.addSubview(button)
@@ -92,6 +93,15 @@ class EditorViewController: UIViewController {
         return scrollView
     }()
     
+    var template: Template? {
+        didSet {
+            collage = template?.collage
+            collage?.isPremium = template!.isPremium
+            collage?.kit.type = template!.type
+            collage?.kit.template = Image(withImage: UIImage(named: template!.filename)!)
+        }
+    }
+    
     var collage: Collage? {
         didSet {
             updateCollage()
@@ -99,9 +109,9 @@ class EditorViewController: UIViewController {
     }
     
     // texts
-    var texts = [Text]()
+    private var texts = [Text]()
     
-    lazy var fontSlider: UISlider = {
+    private lazy var fontSlider: UISlider = {
         let width: CGFloat = 200
         let slider = UISlider(frame: CGRect(x: -80, y: view.center.y - width/2 + 40, width: width, height: 10))
         slider.maximumValue = 100
@@ -111,24 +121,28 @@ class EditorViewController: UIViewController {
         return slider
     }()
     
-    var colorButton = UIButton()
-    var colorPicker: UIView? = nil
+    private var colorButton = UIButton()
+    private var colorPicker: UIView? = nil
+    
+    private lazy var imagePicker = ImagePicker()
     
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         NotificationCenter.default.addObserver(self, selector: #selector(closeColorPicker), name: .closeColorPicker, object: nil)
+        
+        imagePicker.delegate = self
         
         view.tintColor = pinkTint
         view.backgroundColor = blackTint
         setupInitialButtons()
         setupTextEditButtons()
-        container.addGestureRecognizer(hideScrollviewRecognizer)
+        containerView.addGestureRecognizer(hideScrollviewRecognizer)
         view.addSubview(selectScrollView)
     }
-
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         //
@@ -138,12 +152,22 @@ class EditorViewController: UIViewController {
     
     // MARK: Initial buttons
     
+    func button(_ size: CGSize, _ center: CGPoint) -> UIButton {
+        let button = UIButton(frame: CGRect(origin: .zero, size: size))
+        button.backgroundColor = .lightGray
+        button.setImage(UIImage(named: "plus-large")?.tint(color: .white), for: .normal)
+        button.center = center
+        button.isEnabled = true
+        button.isUserInteractionEnabled = true
+        return button
+    }
+    
     func setupInitialButtons() {
-
+        
         // more
         let more = Global.shared.button("more-vertical", CGRect(origin: CGPoint(x: 20, y: top), size: size), lightGrayTint, .small)
         more.addTarget(self, action: #selector(menu), for: .touchUpInside)
-        initialButtons.addSubview(more)
+        initialButtonsView.addSubview(more)
         
         // aspect
         aspect.frame = CGRect(origin: CGPoint(x: 1.5*left + size.width, y: top), size: CGSize(width: 25, height: size.height))
@@ -155,18 +179,18 @@ class EditorViewController: UIViewController {
         aspect.layer.borderColor = lightGrayTint.cgColor
         aspect.layer.borderWidth = 1
         aspect.addTarget(self, action: #selector(aspectUpdate), for: .touchUpInside)
-        initialButtons.addSubview(aspect)
+        initialButtonsView.addSubview(aspect)
         aspectCenter = aspect.center
         
         // text
         let newText = Global.shared.button("text", CGRect(origin: CGPoint(x: (view.frame.width - 35)/2, y: top), size: size), lightGrayTint)
         newText.addTarget(self, action: #selector(newTextTapped), for: .touchUpInside)
-        initialButtons.addSubview(newText)
+        initialButtonsView.addSubview(newText)
         
         // close
         let dismiss = Global.shared.button("close-white", CGRect(origin: CGPoint(x: view.frame.width - 50, y: top), size: size), lightGrayTint, .verysmall)
         dismiss.addTarget(self, action: #selector(close), for: .touchUpInside)
-        initialButtons.addSubview(dismiss)
+        initialButtonsView.addSubview(dismiss)
         
         // bottom buttons
         
@@ -177,26 +201,30 @@ class EditorViewController: UIViewController {
         }
         
         let (button1, border) = Global.shared.tabButton("borders", "Borders", view, centers[0], .white, true)
-        button1.addTarget(self, action: #selector(borders), for: .touchUpInside)
-        initialButtons.addSubview(border)
+        button1.addTarget(self, action: #selector(bordersTapped), for: .touchUpInside)
+        if let collage = collage {
+            button1.isEnabled = collage.kit.canChangeBorder
+        }
+        initialButtonsView.addSubview(border)
         
         let (button2, brand) = Global.shared.tabButton("icon-trans", "Branding", view, centers[1], nil, true)
-        button2.addTarget(self, action: #selector(branding), for: .touchUpInside)
-        initialButtons.addSubview(brand)
-
+        button2.addTarget(self, action: #selector(brandingTapped), for: .touchUpInside)
+        button2.isEnabled = false
+        initialButtonsView.addSubview(brand)
+        
         let (button3, templates) = Global.shared.tabButton("templates", "Templates", view, centers[2], .white, true)
         button3.addTarget(self, action: #selector(templateTapped), for: .touchUpInside)
-        initialButtons.addSubview(templates)
-
+        initialButtonsView.addSubview(templates)
+        
         let (button4, camera) = Global.shared.tabButton("backdrop", "Backdrop", view, centers[3], nil, true)
         button4.addTarget(self, action: #selector(backdropShow), for: .touchUpInside)
-        initialButtons.addSubview(camera)
+        initialButtonsView.addSubview(camera)
         
         let (button5, save) = Global.shared.tabButton("export", "Export", view, centers[4], .white, true)
         button5.addTarget(self, action: #selector(exportTapped), for: .touchUpInside)
-        initialButtons.addSubview(save)
+        initialButtonsView.addSubview(save)
         
-        view.addSubview(initialButtons)
+        view.addSubview(initialButtonsView)
         
         setupCollage()
     }
@@ -204,30 +232,150 @@ class EditorViewController: UIViewController {
     func setupCollage() {
         
         // container that holds everything
-        container.frame = CGRect(origin: .zero, size: CGSize(width: view.frame.width - 2*left, height: 0.75*view.frame.height))
-        container.layer.cornerRadius = 20
-        container.backgroundColor = .darkGray
-        container.layer.masksToBounds = true
-        container.isUserInteractionEnabled = true
-        view.addSubview(container)
-        container.center = view.center
+        containerView.frame = CGRect(origin: .zero, size: CGSize(width: view.frame.width - 2*left, height: 0.75*view.frame.height))
+        containerView.layer.cornerRadius = 20
+        containerView.backgroundColor = .darkGray
+        containerView.layer.masksToBounds = true
+        containerView.isUserInteractionEnabled = true
+        view.addSubview(containerView)
+        containerView.center = view.center
         
         // backdrop
-        backdrop.frame = CGRect(origin: .zero, size: container.frame.size)
-        backdrop.contentMode = .scaleAspectFill
-        container.addSubview(backdrop)
+        backdropImageView.frame = CGRect(origin: .zero, size: containerView.frame.size)
+        backdropImageView.contentMode = .scaleAspectFill
+        backdropImageView.isUserInteractionEnabled = true
+        containerView.addSubview(backdropImageView)
         
         // frame
-        template.contentMode = .scaleAspectFill
-        template.frame = backdrop.frame
-        backdrop.addSubview(template)
-        
+        templateImageView.contentMode = .scaleAspectFill
+        templateImageView.frame = backdropImageView.frame
+        templateImageView.isUserInteractionEnabled = false
+        containerView.addSubview(templateImageView)
+
+        setupPlaceholders()
         updateCollage()
     }
     
+    func setupPlaceholders() {
+        var imageCenter = backdropImageView.center
+        switch collage?.kit.type {
+        case .one:
+            imageCenter.y -= 25
+            let button1 = button(CGSize(width: view.frame.width * 0.66, height: view.frame.height * 0.41), imageCenter)
+            button1.tag = 0
+            button1.addTarget(self, action: #selector(frameSelected(_:)), for: .touchUpInside)
+            if let image = collage?.kit.images?.first {
+                button1.setImage(image.getImage(), for: .normal)
+            }
+            backdropImageView.addSubview(button1)
+        case .two:
+            let width: CGFloat = view.frame.width * 0.50
+            let height: CGFloat = view.frame.height * 0.32
+            
+            imageCenter.y -= 90
+            imageCenter.x -= 91
+            let button1 = button(CGSize(width: width, height: height), imageCenter)
+            button1.tag = 0
+            button1.addTarget(self, action: #selector(frameSelected(_:)), for: .touchUpInside)
+            if let image = collage?.kit.images?.first {
+                button1.setImage(image.getImage(), for: .normal)
+            }
+            button1.rotate(degrees: -2.5)
+            backdropImageView.addSubview(button1)
+            
+            imageCenter = backdropImageView.center
+            imageCenter.y += 50
+            imageCenter.x += 92
+            let button2 = button(CGSize(width: width, height: height), imageCenter)
+            button2.tag = 1
+            button2.addTarget(self, action: #selector(frameSelected(_:)), for: .touchUpInside)
+            if let images = collage?.kit.images, button2.tag < images.count {
+                let image = collage?.kit.images?[button2.tag]
+                button2.setImage(image?.getImage(), for: .normal)
+            }
+            button2.rotate(degrees: 2.5)
+            backdropImageView.addSubview(button2)
+        case .three:
+            let width: CGFloat = view.frame.width * 0.91
+            let height: CGFloat = view.frame.height * 0.235
+            
+            imageCenter.y -= 155
+            let button1 = button(CGSize(width: width, height: height), imageCenter)
+            button1.tag = 0
+            button1.addTarget(self, action: #selector(frameSelected(_:)), for: .touchUpInside)
+            button1.rotate(degrees: 5.8)
+            backdropImageView.addSubview(button1)
+            
+            imageCenter = backdropImageView.center
+            imageCenter.y += 82
+            let button2 = button(CGSize(width: width, height: height), imageCenter)
+            button2.tag = 1
+            button2.addTarget(self, action: #selector(frameSelected(_:)), for: .touchUpInside)
+            button2.rotate(degrees: -1.6)
+            backdropImageView.addSubview(button2)
+
+            imageCenter = backdropImageView.center
+            imageCenter.y += 330
+            let button3 = button(CGSize(width: width, height: height), imageCenter)
+            button3.tag = 2
+            button3.addTarget(self, action: #selector(frameSelected(_:)), for: .touchUpInside)
+            button3.rotate(degrees: -3.5)
+            backdropImageView.addSubview(button3)
+        case .four:
+            let width: CGFloat = view.frame.width * 0.5
+            let height: CGFloat = view.frame.height * 0.325
+            
+            // right side
+            imageCenter = backdropImageView.center
+            imageCenter.y -= 161
+            imageCenter.x += 85
+
+            let button2 = button(CGSize(width: width, height: height), imageCenter)
+            button2.tag = 1
+            button2.addTarget(self, action: #selector(frameSelected(_:)), for: .touchUpInside)
+            button2.rotate(degrees: -1.3)
+            backdropImageView.addSubview(button2)
+
+            imageCenter = backdropImageView.center
+            imageCenter.y += 135
+            imageCenter.x += 103
+            let button4 = button(CGSize(width: width, height: height), imageCenter)
+            button4.tag = 3
+            button4.addTarget(self, action: #selector(frameSelected(_:)), for: .touchUpInside)
+            button4.rotate(degrees: -1.2)
+            backdropImageView.addSubview(button4)
+            
+            // left side
+            imageCenter = backdropImageView.center
+            imageCenter.y -= 136
+            imageCenter.x -= 103
+            let button1 = button(CGSize(width: width, height: height), imageCenter)
+            button1.tag = 0
+            button1.addTarget(self, action: #selector(frameSelected(_:)), for: .touchUpInside)
+            button1.rotate(degrees: -1.2)
+            backdropImageView.addSubview(button1)
+
+            imageCenter = backdropImageView.center
+            imageCenter.y += 162
+            imageCenter.x -= 106
+            let button3 = button(CGSize(width: width, height: height), imageCenter)
+            button3.tag = 2
+            button3.addTarget(self, action: #selector(frameSelected(_:)), for: .touchUpInside)
+            button3.rotate(degrees: -1.0)
+            backdropImageView.addSubview(button3)
+        default: break }
+    }
+    
     func updateCollage() {
-        template.image = collage?.kit.template.getImage()
-        backdrop.image = collage?.kit.backdrop?.getImage()
+        if let color = collage?.kit.border?.color() {
+            templateImageView.image = collage?.kit.template.getImage()?.tint(color: color, .multiply)
+        }
+        else {
+            templateImageView.image = collage?.kit.template.getImage()
+        }
+        
+        backdropImageView.image = collage?.kit.backdrop?.getImage()
+        
         if let texts = collage?.kit.texts {
             self.texts = texts
         }
@@ -242,18 +390,18 @@ class EditorViewController: UIViewController {
         // more
         let more = Global.shared.button("trash", CGRect(origin: CGPoint(x: 20, y: top), size: size), lightGrayTint, .normal)
         more.addTarget(self, action: #selector(deleteText), for: .touchUpInside)
-        textEditButtons.addSubview(more)
+        textEditButtonsView.addSubview(more)
         
         // text
         let newText = Global.shared.button("text", CGRect(origin: CGPoint(x: (view.frame.width - 35)/2, y: top), size: size), lightGrayTint)
         newText.addTarget(self, action: #selector(newTextTapped), for: .touchUpInside)
-        textEditButtons.addSubview(newText)
+        textEditButtonsView.addSubview(newText)
         
         // close
         let dismiss = UIButton(frame: CGRect(origin: CGPoint(x: view.frame.width - 20 - 2*size.width, y: top), size: CGSize(width: 2*size.width, height: size.height)))
         dismiss.setTitle("Done", for: .normal)
         dismiss.addTarget(self, action: #selector(returnToInitialState), for: .touchUpInside)
-        textEditButtons.addSubview(dismiss)
+        textEditButtonsView.addSubview(dismiss)
         
         // bottom buttons
         
@@ -266,19 +414,19 @@ class EditorViewController: UIViewController {
         let (button1, border) = Global.shared.tabButton("circle", "Color", view, centers[0], getFieldColor(), true)
         colorButton = button1
         colorButton.addTarget(self, action: #selector(colorTapped), for: .touchUpInside)
-        textEditButtons.addSubview(border)
+        textEditButtonsView.addSubview(border)
         
         let (button2, brand) = Global.shared.tabButton("icon-trans", "Font", view, centers[1], nil, true)
         button2.addTarget(self, action: #selector(fontTapped), for: .touchUpInside)
-        textEditButtons.addSubview(brand)
-
+        textEditButtonsView.addSubview(brand)
+        
         let (button3, templates) = Global.shared.tabButton("pencil", "Edit", view, centers[2], .white, true)
         button3.addTarget(self, action: #selector(editField), for: .touchUpInside)
-        textEditButtons.addSubview(templates)
+        textEditButtonsView.addSubview(templates)
         
-        textEditButtons.addGestureRecognizer(endEditRecognizer)
+        textEditButtonsView.addGestureRecognizer(endEditRecognizer)
         
-        view.addSubview(textEditButtons)
+        view.addSubview(textEditButtonsView)
     }
     
     @objc func returnToInitialState() {
@@ -292,13 +440,12 @@ class EditorViewController: UIViewController {
     }
     
     func toggleInterface(_ isEditing: Bool) {
-        initialButtons.isHidden = isEditing
-        textEditButtons.isHidden = !isEditing
+        initialButtonsView.isHidden = isEditing
+        textEditButtonsView.isHidden = !isEditing
         
         if !isEditing {
             view.endEditing(true)
             collage?.kit.texts = texts.filter{ !$0.text.isEmpty }
-            layoutTexts()
         }
     }
     
@@ -322,11 +469,11 @@ class EditorViewController: UIViewController {
         aspect.frame = CGRect(origin: CGPoint(x: 1.5*left + size.width, y: top), size: CGSize(width: 25, height: isModernAspect ? size.height : size.height*0.85))
         aspect.center = aspectCenter
         
-        container.frame = CGRect(origin: .zero, size: CGSize(width: view.frame.width - (2 * left), height: (isModernAspect ? 0.75 : 0.6)*view.frame.height))
-        container.center = view.center
+        containerView.frame = CGRect(origin: .zero, size: CGSize(width: view.frame.width - (2 * left), height: (isModernAspect ? 0.75 : 0.6)*view.frame.height))
+        containerView.center = view.center
         
         let offset = (0.15*view.frame.height)/2
-        backdrop.frame.origin.y = isModernAspect ? 0 : -offset
+        backdropImageView.frame.origin.y = isModernAspect ? 0 : -offset
     }
     
     @objc func close() {
@@ -335,13 +482,16 @@ class EditorViewController: UIViewController {
     
     // bottom buttons
     
-    @objc func borders() {
+    @objc func brandingTapped() {
         
     }
     
-    @objc func branding() {
-        
+    @objc func exportTapped() {
+        let exportImage = containerView.takeScreenshot()
+        UIImageWriteToSavedPhotosAlbum(exportImage, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
     }
+    
+    // MARK: - Template handling
     
     @objc func templateTapped() {
         let templatesVC = TemplatesViewController()
@@ -349,12 +499,35 @@ class EditorViewController: UIViewController {
         present(templatesVC, animated: true, completion: nil)
     }
     
-    @objc func exportTapped() {
-        let exportImage = container.takeScreenshot()
-        UIImageWriteToSavedPhotosAlbum(exportImage, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
+    var selectedImageIndex: Int = 0
+    
+    @objc func frameSelected(_ sender: UIButton) {
+        selectedImageIndex = sender.tag
+        hideEditors()
+        selectImageSource()
     }
     
-    //MARK: - Add image to Library
+    func selectImageSource() {
+        let alert = UIAlertController(title: "Select source", message: nil, preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "Photo gallery", style: .default, handler: { _ in
+            self.imagePicker.photoGalleryAsscessRequest()
+        }))
+        alert.addAction(UIAlertAction(title: "Camera", style: .default, handler: { _ in
+            self.imagePicker.cameraAsscessRequest()
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        present(alert, animated: true, completion: nil)
+    }
+    
+    // MARK: - Image Picker
+    
+    private func presentImagePicker(sourceType: UIImagePickerController.SourceType) {
+        DispatchQueue.main.async {
+            self.imagePicker.present(parent: self, sourceType: sourceType)
+        }
+    }
+    
+    // MARK: - Add image to Library
     
     @objc func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
         if let error = error {
@@ -363,7 +536,7 @@ class EditorViewController: UIViewController {
             showAlertWith(title: "Saved!", message: "Your image has been saved to your photos.")
         }
     }
-
+    
     func showAlertWith(title: String, message: String){
         let ac = UIAlertController(title: title, message: message, preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "OK", style: .default))
@@ -442,8 +615,8 @@ class EditorViewController: UIViewController {
                 field.layer.borderWidth = 1
                 colorButton.setImage(UIImage(named: "circle")?.tint(color: getFieldColor()).resize(30), for: .normal)
             }
-            initialButtons.isHidden = true
-            textEditButtons.isHidden = false
+            initialButtonsView.isHidden = true
+            textEditButtonsView.isHidden = false
         }
     }
     
@@ -502,7 +675,7 @@ class EditorViewController: UIViewController {
     
     @objc func closeColorPicker(_ notification: Notification?) {
         if colorPicker != nil {
-    
+            
             if let object = notification?.object as? [String: Any], let color = object["color"] as? String {
                 print(#function, color)
                 if let field = view.subviews.first(where: {$0.layer.borderWidth > 0}) as? UITextField {
@@ -569,7 +742,7 @@ class EditorViewController: UIViewController {
                     !name.hasSuffix("Condensed") &&
                     !name.hasSuffix("BookIt") {
                     fontNames.append(["family": sName, "name": name])
-//                    print("family name: \(sName as String), name: \(name as String)")
+                    //                    print("family name: \(sName as String), name: \(name as String)")
                 }
             }
         }
@@ -608,7 +781,18 @@ class EditorViewController: UIViewController {
         }
     }
     
-    @objc func backdropHide() {
+    @objc func hideEditors() {
+        print(#function)
+        if colorSlider != nil {
+            let container = colorSlider?.superview
+            UIView.animate(withDuration: 0.3, animations: {
+                container?.frame.origin.y = self.view.frame.height
+            }) { _ in
+                container?.removeFromSuperview()
+                self.colorSlider = nil
+            }
+        }
+        
         guard selectScrollView.frame.origin.y < view.bounds.height else { return }
         
         UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn, animations: {
@@ -629,8 +813,41 @@ class EditorViewController: UIViewController {
         else {
             if let image = UIImage(named: set.filename) {
                 collage?.kit.backdrop = Image(withImage: image)
-                updateCollage()
             }
+        }
+    }
+    
+    // MARK: - Border color
+    
+    var colorSlider: ColorSlider? = nil
+    
+    @objc func bordersTapped() {
+        if colorSlider == nil {
+            let chosenColor = collage?.kit.border?.color()
+            colorSlider = ColorSlider(orientation: .horizontal, previewSide: .bottom)
+            colorSlider?.color = chosenColor ?? .clear
+            colorSlider?.frame = CGRect(x: left, y: left, width: view.frame.width - 2*left, height: 30)
+            colorSlider?.addTarget(self, action: #selector(changedColor(_:)), for: .valueChanged)
+            colorSlider?.alpha = 1
+            
+            let height: CGFloat = 3*top
+            let contentView = UIView(frame: CGRect(x: 0, y: view.frame.height, width: view.frame.width, height: height))
+            contentView.backgroundColor = blackTint
+            contentView.addSubview(colorSlider!)
+            view.addSubview(contentView)
+            
+            colorSlider?.previewView?.transition(to: .inactive)
+            colorSlider?.layoutSubviews()
+            
+            UIView.animate(withDuration: 0.3, animations: {
+                contentView.frame.origin.y -= height
+            })
+        }
+    }
+    
+    @objc func changedColor(_ slider: ColorSlider) {
+        if let hex = slider.color.hexString {
+            collage?.kit.border = Color(hex: hex)
         }
     }
 }
@@ -700,5 +917,53 @@ extension EditorViewController: UITableViewDelegate, UITableViewDataSource {
             toggleInterface(false)
         }
         tableView.isHidden = true
+    }
+}
+
+// MARK: - ImagePickerDelegate
+
+extension EditorViewController: ImagePickerDelegate {
+    
+    func imagePickerDelegate(didSelect image: UIImage, delegatedForm: ImagePicker) {
+        imagePicker.dismiss()
+        
+        if let button = backdropImageView.subviews.first(where: {$0.tag == selectedImageIndex}) as? UIButton {
+//            button.setBackgroundImage(image, for: .normal)
+            button.setImage(image, for: .normal)
+            let thumbnail = containerView.takeScreenshot()
+            collage?.kit.thumbnail = Image(withImage: thumbnail)
+            
+            if var images = collage?.kit.images, selectedImageIndex < images.count {
+                images[selectedImageIndex] = Image(withImage: image)
+                collage?.kit.images = images
+            }
+            else {
+                collage?.kit.images = [Image(withImage: image)]
+            }
+            
+            if var collages = Global.shared.restore(userCollagesKey) as [Collage]?, collages.count > 0 {
+                if let index = collages.firstIndex(where: {$0.id == self.collage?.id}) {
+                    collages[index] = self.collage!
+                }
+                else {
+                    collages.append(self.collage!)
+                }
+                Global.shared.save(collages, key: userCollagesKey)
+            }
+            else {
+                Global.shared.save([self.collage], key: userCollagesKey)
+            }
+        }
+    }
+    
+    func imagePickerDelegate(didCancel delegatedForm: ImagePicker) { imagePicker.dismiss() }
+    
+    func imagePickerDelegate(canUseGallery accessIsAllowed: Bool, delegatedForm: ImagePicker) {
+        if accessIsAllowed { presentImagePicker(sourceType: .photoLibrary) }
+    }
+    
+    func imagePickerDelegate(canUseCamera accessIsAllowed: Bool, delegatedForm: ImagePicker) {
+        // works only on real device (crash on simulator)
+        if accessIsAllowed { presentImagePicker(sourceType: .camera) }
     }
 }

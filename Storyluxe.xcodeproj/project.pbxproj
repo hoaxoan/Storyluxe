@@ -23,6 +23,7 @@
 		537A2269243B711600711168 /* ColorPicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = 537A2266243B711600711168 /* ColorPicker.xib */; };
 		537A226A243B711600711168 /* ColorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 537A2267243B711600711168 /* ColorManager.swift */; };
 		537A226C243B736900711168 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 537A226B243B736900711168 /* UIColor.swift */; };
+		537A2271243E06D400711168 /* PassthroughView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 537A2270243E06D400711168 /* PassthroughView.swift */; };
 		537DC5682434E56600FFD3C7 /* PurchaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 537DC5672434E56600FFD3C7 /* PurchaseViewController.swift */; };
 		53BA030F24320D7700286967 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BA030E24320D7700286967 /* Global.swift */; };
 		53BA0314243216C600286967 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BA0313243216C600286967 /* SettingsTableViewController.swift */; };
@@ -54,6 +55,7 @@
 		537A2266243B711600711168 /* ColorPicker.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ColorPicker.xib; sourceTree = "<group>"; };
 		537A2267243B711600711168 /* ColorManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorManager.swift; sourceTree = "<group>"; };
 		537A226B243B736900711168 /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		537A2270243E06D400711168 /* PassthroughView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassthroughView.swift; sourceTree = "<group>"; };
 		537DC5672434E56600FFD3C7 /* PurchaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseViewController.swift; sourceTree = "<group>"; };
 		53BA030E24320D7700286967 /* Global.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
 		53BA0313243216C600286967 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
@@ -150,6 +152,14 @@
 			path = ColorPicker;
 			sourceTree = "<group>";
 		};
+		537A226D243E032100711168 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				537A2270243E06D400711168 /* PassthroughView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		53BA03102432155200286967 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -199,6 +209,7 @@
 				53E9EA122430FB9B00BC1B3E /* AppDelegate.swift */,
 				53BA03102432155200286967 /* Controller */,
 				53653AAC24323AF800F3E5FB /* Cells */,
+				537A226D243E032100711168 /* Views */,
 				53E6785D2431F7E000E195AE /* Utils */,
 				53653AAA24323AC900F3E5FB /* Resources */,
 				53653AAB24323ADA00F3E5FB /* Extensions */,
@@ -363,6 +374,7 @@
 				531F4D482434B3E000B8FA04 /* Text.swift in Sources */,
 				53DB1C142435E4F90005E167 /* InstallViewController.swift in Sources */,
 				53E9EA132430FB9B00BC1B3E /* AppDelegate.swift in Sources */,
+				537A2271243E06D400711168 /* PassthroughView.swift in Sources */,
 				536D778F243451AE00601A24 /* TemplatesViewController.swift in Sources */,
 				537A2268243B711600711168 /* ColorPicker.swift in Sources */,
 				53DB1C16243628290005E167 /* Backdrop.swift in Sources */,

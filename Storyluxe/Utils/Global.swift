@@ -91,25 +91,25 @@ class Global: NSObject {
                         kit: Kit(thumbnail: Image(withImage: UIImage(named: "brian")!),
                                    template: Image(withImage: UIImage(named: "instant_1f")!),
                                    type: .one,
-                                   aspect: .aspect9_16)),
+                                   aspect: .aspect9_16, canChangeBorder: true)),
                 Collage(id: UUID().uuidString,
                         isPremium: true,
                         kit: Kit(thumbnail: Image(withImage: UIImage(named: "nichole")!),
                                    template: Image(withImage: UIImage(named: "instant_2f")!),
                                    type: .two,
-                                   aspect: .aspect9_16)),
+                                   aspect: .aspect9_16, canChangeBorder: false)),
                 Collage(id: UUID().uuidString,
                         isPremium: true,
                         kit: Kit(thumbnail: Image(withImage: UIImage(named: "brian")!),
                                    template: Image(withImage: UIImage(named: "instant_3f")!),
                                    type: .three,
-                                   aspect: .aspect9_16)),
+                                   aspect: .aspect9_16, canChangeBorder: true)),
                 Collage(id: UUID().uuidString,
                         isPremium: false,
                         kit: Kit(thumbnail: Image(withImage: UIImage(named: "nichole")!),
                                    template: Image(withImage: UIImage(named: "instant_4f")!),
                                    type: .four,
-                                   aspect: .aspect9_16))]
+                                   aspect: .aspect9_16, canChangeBorder: false))]
     }
     
     func save<T: Encodable>(_ items: [T]?, key: String) {
@@ -140,12 +140,12 @@ class Global: NSObject {
     
     func testSets() -> [TemplateSet] {
         let set1 = [Template(filename: "instant_1f", isPremium: false, type: .one, collage: testCollages()[0]),
-                    Template(filename: "instant_2f", isPremium: true, type: .two, collage: testCollages()[1]),
-                    Template(filename: "instant_3f", isPremium: true, type: .three, collage: testCollages()[2]),
-                    Template(filename: "instant_4f", isPremium: false, type: .four, collage: testCollages()[3])]
-        let set2 = [Template(filename: "instant_4f", isPremium: true, type: .four, collage: testCollages()[0]),
                     Template(filename: "instant_2f", isPremium: false, type: .two, collage: testCollages()[1]),
-                    Template(filename: "instant_1f", isPremium: true, type: .one, collage: testCollages()[2]),
+                    Template(filename: "instant_3f", isPremium: false, type: .three, collage: testCollages()[2]),
+                    Template(filename: "instant_4f", isPremium: false, type: .four, collage: testCollages()[3])]
+        let set2 = [Template(filename: "instant_4f", isPremium: false, type: .four, collage: testCollages()[0]),
+                    Template(filename: "instant_2f", isPremium: false, type: .two, collage: testCollages()[1]),
+                    Template(filename: "instant_1f", isPremium: false, type: .one, collage: testCollages()[2]),
                     Template(filename: "instant_3f", isPremium: false, type: .three, collage: testCollages()[3])]
         
         let flame = Image.init(withImage: UIImage(named: "flame")!.tint(color: pinkTint))

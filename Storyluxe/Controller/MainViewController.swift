@@ -19,7 +19,7 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
     let numberOfItemsPerRow: CGFloat = 3.0
     let screenSize: CGRect = UIScreen.main.bounds
     private let cellReuseIdentifier = "CollectionCell"
-    var items = [Collage]()
+    var collages = [Collage]()
     
     // MARK: - Lifecycle
     
@@ -27,18 +27,19 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         super.viewDidLoad()
         view.backgroundColor = blackTint
         imagePicker.delegate = self
-        
-        items = Global.shared.testCollages()
-        if let collages = Global.shared.restore(userCollagesKey) as [Collage]?, collages.count > 0 {
-            items = collages
-        }
-        
         setupUI()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
+        if let collages = Global.shared.restore(userCollagesKey) as [Collage]?, collages.count > 0 {
+            self.collages = collages
+            setupCollectionView()
+        }
+        else {
+            showTemplates()
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -91,8 +92,6 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
         let (button3, camera) = Global.shared.tabButton("camera", "Camera", view, centers[2], .white)
         button3.addTarget(self, action: #selector(showCamera), for: .touchUpInside)
         view.addSubview(camera)
-        
-        setupCollectionView()
     }
     
     func setupCollectionView() {
@@ -111,18 +110,18 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
     // collection delegate
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.items.count
+        return self.collages.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellReuseIdentifier, for: indexPath) as! PreviewCollectionViewCell
-        cell.image = items[indexPath.item].kit.thumbnail.getImage()
+        cell.image = collages[indexPath.item].kit.thumbnail.getImage()
         return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let editorVC = EditorViewController()
-        editorVC.collage = items[indexPath.item]
+        editorVC.collage = collages[indexPath.item]
         editorVC.modalPresentationStyle = .fullScreen
         present(editorVC, animated: true, completion: nil)
     }

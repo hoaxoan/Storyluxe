@@ -15,10 +15,11 @@ struct Kit: Codable {
     var type: FrameType
     var aspect: Aspect
     var images: [Image]?
-    var border: Image?
+    var border: Color?
     var backdrop: Image?
     var branding: Image?
     var texts: [Text]?
+    var canChangeBorder: Bool
 }
 
 struct Image: Codable {

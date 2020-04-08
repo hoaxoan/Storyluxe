@@ -57,7 +57,7 @@ struct Color: Codable {
     var hex: String
     
     func color() -> UIColor {
-        return UIColor(hex: hex) ?? UIColor.black
+        return UIColor(hex: hex) 
     }
 }
 
