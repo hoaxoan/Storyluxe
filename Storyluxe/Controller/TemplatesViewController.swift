@@ -93,20 +93,21 @@ class TemplatesViewController: UIViewController, UICollectionViewDataSource, UIC
 
         let allSets = sets.filter {$0.installed }
         allSets.enumerated().forEach { index, _ in
-            setupCollectionView(CGFloat(index))
+            setupCollectionView(index)
         }
         mainScrollView.contentSize = CGSize(width: view.frame.width * CGFloat(allSets.count), height: height)
         view.addSubview(mainScrollView)
     }
     
-    private func setupCollectionView(_ index: CGFloat) {
+    private func setupCollectionView(_ index: Int) {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.minimumLineSpacing = 20
-        let frame = CGRect(x: view.frame.width * index, y: 0, width: view.frame.width, height: mainScrollView.frame.height)
+        let frame = CGRect(x: view.frame.width * CGFloat(index), y: 0, width: view.frame.width, height: mainScrollView.frame.height)
         let collectionView = UICollectionView(frame: frame, collectionViewLayout: flowLayout)
         collectionView.register(TemplateCollectionViewCell.self, forCellWithReuseIdentifier: cellReuseIdentifier)
         collectionView.delegate = self
         collectionView.dataSource = self
+        collectionView.tag = index
         collectionView.backgroundColor = blackTint
         collectionView.allowsSelection = true
         mainScrollView.addSubview(collectionView)
@@ -255,17 +256,32 @@ class TemplatesViewController: UIViewController, UICollectionViewDataSource, UIC
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let allSets = sets.filter {$0.installed }
-        let set = allSets[indexPath.section].set
-        if set[indexPath.item].isPremium {
+        let set = allSets[collectionView.tag].set
+        if set[indexPath.item].isPremium && !UserDefaults.standard.bool(forKey: isPurchaseUnlocked) {
             let purchaseVC = PurchaseViewController()
             present(purchaseVC, animated: true, completion: nil)
         }
         else {
             let editorVC = EditorViewController()
-            editorVC.template = set[indexPath.item]
+            editorVC.collage = newCollage(set[indexPath.item])
             editorVC.modalPresentationStyle = .fullScreen
             present(editorVC, animated: true, completion: nil)
         }
+    }
+    
+    func newCollage(_ template: Template) -> Collage {
+        let collage = Collage(isPremium: template.isPremium,
+                              kit: Kit(thumbnail: nil,
+                                       template: Image(withImage: UIImage(named: template.filename)!),
+                                       type: template.type,
+                                       aspect: .aspect9_16,
+                                       images: nil,
+                                       border: nil,
+                                       backdrop: nil,
+                                       branding: nil,
+                                       texts: nil,
+                                       canChangeBorder: true))
+        return collage
     }
     
     // MARK: - Actions

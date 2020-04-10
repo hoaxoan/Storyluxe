@@ -93,18 +93,13 @@ class EditorViewController: UIViewController {
         return scrollView
     }()
     
-    var template: Template? {
-        didSet {
-            collage = template?.collage
-            collage?.isPremium = template!.isPremium
-            collage?.kit.type = template!.type
-            collage?.kit.template = Image(withImage: UIImage(named: template!.filename)!)
-        }
-    }
-    
     var collage: Collage? {
         didSet {
-            updateCollage()
+            if viewIfLoaded?.window != nil {
+                let thumbnail = containerView.takeScreenshot()
+                collage?.kit.thumbnail = Image(withImage: thumbnail)
+                updateCollage()
+            }
         }
     }
     
@@ -228,6 +223,8 @@ class EditorViewController: UIViewController {
         
         setupCollage()
     }
+    
+    // MARK: - COLLAGE
     
     func setupCollage() {
         
@@ -367,6 +364,7 @@ class EditorViewController: UIViewController {
     }
     
     func updateCollage() {
+        print(#function)
         if let color = collage?.kit.border?.color() {
             templateImageView.image = collage?.kit.template.getImage()?.tint(color: color, .multiply)
         }
@@ -380,9 +378,27 @@ class EditorViewController: UIViewController {
             self.texts = texts
         }
         layoutTexts()
+        saveCollage()
     }
     
-    // MARK: Text Edit buttons
+    func saveCollage() {
+        
+        
+        if var collages = Global.shared.restore(userCollagesKey) as [Collage]?, collages.count > 0 {
+            if let index = collages.firstIndex(where: {$0.id == self.collage?.id}) {
+                collages[index] = self.collage!
+            }
+            else {
+                collages.append(self.collage!)
+            }
+            Global.shared.save(collages, key: userCollagesKey)
+        }
+        else {
+            Global.shared.save([self.collage], key: userCollagesKey)
+        }
+    }
+    
+    // MARK: - Text Edit buttons
     
     func setupTextEditButtons() {
         // top buttons
@@ -552,11 +568,11 @@ class EditorViewController: UIViewController {
                         font: Font(name: "BodoniSvtyTwoOSITCTT-Book", size: 35),
                         alignment: Alignment(state: .center),
                         location: Location(x: 0, y: view.frame.height/2))
-        text.center = view.center
+        text.center = containerView.center
         texts.append(text)
         
         let field = textField(text)
-        view.addSubview(field)
+        containerView.addSubview(field)
         field.becomeFirstResponder()
     }
     
@@ -567,7 +583,7 @@ class EditorViewController: UIViewController {
     
     // construct a field
     func textField(_ text: Text) -> UITextField {
-        let textField = UITextField(frame: CGRect(origin: text.location.point(), size: CGSize(width: view.frame.width, height: text.height)))
+        let textField = UITextField(frame: CGRect(origin: text.location.point(), size: CGSize(width: containerView.frame.width, height: text.height)))
         textField.text = text.text
         textField.textAlignment = text.alignment.align()
         textField.font = text.font.font()
@@ -591,7 +607,7 @@ class EditorViewController: UIViewController {
             field.isUserInteractionEnabled = true
             field.addGestureRecognizer(panRecognizer())
             field.addGestureRecognizer(tapRecognizer())
-            view.addSubview(field)
+            containerView.addSubview(field)
         }
     }
     
@@ -630,8 +646,8 @@ class EditorViewController: UIViewController {
     
     @objc func draggedView(_ sender: UIPanGestureRecognizer) {
         if let field = sender.view as? UITextField {
-            view.bringSubviewToFront(field)
-            let translation = sender.translation(in: self.view)
+            containerView.bringSubviewToFront(field)
+            let translation = sender.translation(in: self.containerView)
             field.center = CGPoint(x: field.center.x + translation.x, y: field.center.y + translation.y)
             sender.setTranslation(.zero, in: self.view)
             
@@ -806,12 +822,13 @@ class EditorViewController: UIViewController {
     @objc func backdropSelected(_ sender: UIButton) {
         let index = sender.tag
         let set = Global.shared.backdrops().flatMap({$0.set})[index]
-        if set.isPremium {
+        if set.isPremium && !UserDefaults.standard.bool(forKey: isPurchaseUnlocked) {
             let purchaseVC = PurchaseViewController()
             present(purchaseVC, animated: true, completion: nil)
         }
         else {
             if let image = UIImage(named: set.filename) {
+                backdropImageView.image = image
                 collage?.kit.backdrop = Image(withImage: image)
             }
         }
@@ -930,8 +947,6 @@ extension EditorViewController: ImagePickerDelegate {
         if let button = backdropImageView.subviews.first(where: {$0.tag == selectedImageIndex}) as? UIButton {
 //            button.setBackgroundImage(image, for: .normal)
             button.setImage(image, for: .normal)
-            let thumbnail = containerView.takeScreenshot()
-            collage?.kit.thumbnail = Image(withImage: thumbnail)
             
             if var images = collage?.kit.images, selectedImageIndex < images.count {
                 images[selectedImageIndex] = Image(withImage: image)
@@ -939,19 +954,6 @@ extension EditorViewController: ImagePickerDelegate {
             }
             else {
                 collage?.kit.images = [Image(withImage: image)]
-            }
-            
-            if var collages = Global.shared.restore(userCollagesKey) as [Collage]?, collages.count > 0 {
-                if let index = collages.firstIndex(where: {$0.id == self.collage?.id}) {
-                    collages[index] = self.collage!
-                }
-                else {
-                    collages.append(self.collage!)
-                }
-                Global.shared.save(collages, key: userCollagesKey)
-            }
-            else {
-                Global.shared.save([self.collage], key: userCollagesKey)
             }
         }
     }

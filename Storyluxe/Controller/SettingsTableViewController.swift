@@ -23,10 +23,14 @@ class SettingsTableViewController: UITableViewController {
         
         let button = UIBarButtonItem(title: "Support", style: .done, target: self, action: #selector(emailSupport))
         navigationItem.rightBarButtonItem = button
-        
         navigationController?.navigationBar.tintColor = pinkTint
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        tableView.reloadData()
+    }
+    
     // MARK: - Actions
 
     @objc func emailSupport() {
@@ -77,6 +81,9 @@ class SettingsTableViewController: UITableViewController {
         case 0:
             cell.textLabel?.textColor = pinkTint
             cell.accessoryType = .none
+            let isUnlocked = UserDefaults.standard.bool(forKey: isPurchaseUnlocked)
+            cell.alpha = !isUnlocked ? 1.0 : 0.2
+            cell.isUserInteractionEnabled = !isUnlocked
         case 1:
             cell.textLabel?.textColor = indexPath.row < 4 ? .black : .gray
             cell.accessoryType = .disclosureIndicator
@@ -100,6 +107,12 @@ class SettingsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
+        if indexPath.section == 0 && indexPath.row == 0 {
+            if !UserDefaults.standard.bool(forKey: isPurchaseUnlocked) {
+                let purchaseVC = PurchaseViewController()
+                present(purchaseVC, animated: true, completion: nil)
+            }
+        }
     }
 }
 

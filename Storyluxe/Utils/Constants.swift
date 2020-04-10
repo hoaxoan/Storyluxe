@@ -20,7 +20,12 @@ extension Notification.Name {
     static let closeColorPicker = Notification.Name("closeColorPickerNotification")
 }
 
+// IAP purchase identifiers
+let subscribeFullUnlock = "com.kovallux.Storyluxe.FullUnlock"
+
 // keys
+let firstLaunch = "firstLaunch"
+let isPurchaseUnlocked = "isPurchaseUnlocked"
 let allTemplatesKey = "allTemplatesKey"
 let userCollagesKey = "userCollagesKey"
 

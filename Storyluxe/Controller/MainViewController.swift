@@ -33,6 +33,10 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         if let collages = Global.shared.restore(userCollagesKey) as [Collage]?, collages.count > 0 {
             self.collages = collages
             setupCollectionView()
@@ -115,7 +119,7 @@ class MainViewController: UIViewController, UICollectionViewDataSource, UICollec
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellReuseIdentifier, for: indexPath) as! PreviewCollectionViewCell
-        cell.image = collages[indexPath.item].kit.thumbnail.getImage()
+        cell.image = collages[indexPath.item].kit.thumbnail?.getImage()
         return cell
     }
 

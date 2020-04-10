@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyStoreKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -25,6 +26,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             window.makeKeyAndVisible()
         }
 
+        // Complete Transactions
+        SwiftyStoreKit.completeTransactions(atomically: true) { purchases in
+            for purchase in purchases {
+                switch purchase.transaction.transactionState {
+                case .purchased, .restored:
+                    if purchase.needsFinishTransaction {
+                        // Deliver content from server, then:
+                        SwiftyStoreKit.finishTransaction(purchase.transaction)
+                    }
+                    // Unlock content
+                    UserDefaults.standard.set(true, forKey: isPurchaseUnlocked)
+                case .failed, .purchasing, .deferred:
+                    break // do nothing
+                @unknown default:
+                    break // do nothing
+                }
+            }
+        }
+        
         return true
     }
 

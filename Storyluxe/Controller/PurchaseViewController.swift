@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyStoreKit
 
 class PurchaseViewController: UIViewController {
 
@@ -24,7 +25,7 @@ class PurchaseViewController: UIViewController {
         dismiss.addTarget(self, action: #selector(close), for: .touchUpInside)
         view.addSubview(dismiss)
         
-        view.addSubview(label("Restore Subscription", blueTint, 16, top, true))
+//        view.addSubview(label("Restore Subscription", blueTint, 16, top, true))
         view.addSubview(label("Unlimited Access", pinkTint, 22, 7*top, true))
         view.addSubview(label("$0.99 / month", .black, 28, 10*top, true))
         view.addSubview(label("all templates", .black, 18, 14*top, false, true))
@@ -33,6 +34,16 @@ class PurchaseViewController: UIViewController {
         view.addSubview(label("all fonts", .black, 18, 20*top, false, true))
         view.addSubview(label("custom branding", .black, 18, 22*top, false, true))
         view.addSubview(label("updated weekly", .black, 18, 24*top, false, true))
+        
+        let restore = UIButton(frame: CGRect(x: offset, y: top, width: view.frame.width - 2*offset, height: 40))
+        restore.backgroundColor = .clear
+        restore.setTitle("Restore Subscription", for: .normal)
+        restore.titleLabel?.font = .systemFont(ofSize: 16)
+        restore.titleLabel?.numberOfLines = 0
+        restore.titleLabel?.textAlignment = .center
+        restore.setTitleColor(blueTint, for: .normal)
+        restore.addTarget(self, action: #selector(restoreTapped), for: .touchUpInside)
+        view.addSubview(restore)
         
         let subscribe = UIButton(frame: CGRect(x: 1.5*offset, y: 27*top, width: view.frame.width - 3*offset, height: 80))
         subscribe.backgroundColor = blueTint
@@ -43,7 +54,7 @@ class PurchaseViewController: UIViewController {
         subscribe.setTitleColor(.white, for: .normal)
         subscribe.layer.cornerRadius = 10
         subscribe.layer.masksToBounds = true
-        subscribe.addTarget(self, action: #selector(purchase), for: .touchUpInside)
+        subscribe.addTarget(self, action: #selector(subscribeTapped), for: .touchUpInside)
         view.addSubview(subscribe)
         
         let legal = UITextView(frame: CGRect(x: top, y: view.frame.height - 4*offset, width: view.frame.width - 2*top, height: 2*offset))
@@ -119,15 +130,57 @@ class PurchaseViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
 
-    @objc func purchase() {
+    @objc func restoreTapped() {
         print(#function)
+        SwiftyStoreKit.restorePurchases(atomically: true) { results in
+            if results.restoreFailedPurchases.count > 0 {
+                print("Restore Failed: \(results.restoreFailedPurchases)")
+            }
+            else if results.restoredPurchases.count > 0 {
+                print("Restore Success: \(results.restoredPurchases)")
+                UserDefaults.standard.set(true, forKey: isPurchaseUnlocked)
+                self.dismiss(animated: true, completion: nil)
+            }
+            else {
+                print("Nothing to Restore")
+            }
+        }
+    }
+    
+    @objc func subscribeTapped() {
+        print(#function)
+        SwiftyStoreKit.purchaseProduct(subscribeFullUnlock, quantity: 1, atomically: true) { result in
+            switch result {
+            case .success(let purchase):
+                print("Purchase Success: \(purchase.productId)")
+                UserDefaults.standard.set(true, forKey: isPurchaseUnlocked)
+                self.dismiss(animated: true, completion: nil)
+            case .error(let error):
+                switch error.code {
+                case .unknown: print("Unknown error. Please contact support")
+                case .clientInvalid: print("Not allowed to make the payment")
+                case .paymentCancelled: break
+                case .paymentInvalid: print("The purchase identifier was invalid")
+                case .paymentNotAllowed: print("The device is not allowed to make the payment")
+                case .storeProductNotAvailable: print("The product is not available in the current storefront")
+                case .cloudServicePermissionDenied: print("Access to cloud service information is not allowed")
+                case .cloudServiceNetworkConnectionFailed: print("Could not connect to the network")
+                case .cloudServiceRevoked: print("User has revoked permission to use this cloud service")
+                default: print((error as NSError).localizedDescription)
+                }
+            }
+        }
     }
     
     @objc func termsTapped() {
         print(#function)
+        let textVC = RTFViewController()
+        present(textVC, animated: true, completion: nil)
     }
     
     @objc func privacyTapped() {
         print(#function)
+        let textVC = RTFViewController()
+        present(textVC, animated: true, completion: nil)
     }
 }

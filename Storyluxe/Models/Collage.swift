@@ -9,7 +9,7 @@
 import Foundation
 
 struct Collage: Codable {
-    var id: String
+    var id: String = UUID().uuidString
     var isPremium: Bool
     var kit: Kit
     

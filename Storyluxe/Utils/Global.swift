@@ -12,7 +12,10 @@ import UIKit
 class Global: NSObject {
     static let shared = Global()
     private override init() {
-//        UserDefaults.standard.removeObject(forKey: allTemplatesKey)
+        if UserDefaults.standard.object(forKey: firstLaunch) == nil {
+            UserDefaults.standard.set(Date(), forKey: firstLaunch)
+            UserDefaults.standard.set(false, forKey: isPurchaseUnlocked)
+        }
     }
     
     // MARK: - UI elements

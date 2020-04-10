@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 struct Kit: Codable {
-    var thumbnail: Image
+    var thumbnail: Image?
     var template: Image
     var type: FrameType
     var aspect: Aspect
