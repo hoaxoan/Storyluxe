@@ -186,7 +186,12 @@ extension MainViewController: ImagePickerDelegate {
     
     func imagePickerDelegate(didSelect image: UIImage, delegatedForm: ImagePicker) {
         imagePicker.dismiss()
-        // FIXME: pass image to creator
+        
+        let object = Image(withImage: image)
+        let templatesVC = TemplatesViewController()
+        templatesVC.image = object
+        templatesVC.modalPresentationStyle = .fullScreen
+        present(templatesVC, animated: true, completion: nil)
     }
     
     func imagePickerDelegate(didCancel delegatedForm: ImagePicker) { imagePicker.dismiss() }

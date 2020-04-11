@@ -42,6 +42,8 @@ class TemplatesViewController: UIViewController, UICollectionViewDataSource, UIC
     private let toolbarScrollView = UIScrollView()
     private let subtoolbarScrollView = UIScrollView()
     
+    var image: Image?
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -270,7 +272,7 @@ class TemplatesViewController: UIViewController, UICollectionViewDataSource, UIC
     }
     
     func newCollage(_ template: Template) -> Collage {
-        let collage = Collage(isPremium: template.isPremium,
+        var collage = Collage(isPremium: template.isPremium,
                               kit: Kit(thumbnail: nil,
                                        template: Image(withImage: UIImage(named: template.filename)!),
                                        type: template.type,
@@ -281,6 +283,9 @@ class TemplatesViewController: UIViewController, UICollectionViewDataSource, UIC
                                        branding: nil,
                                        texts: nil,
                                        canChangeBorder: true))
+        if let image = self.image {
+            collage.kit.images = [image]
+        }
         return collage
     }
     

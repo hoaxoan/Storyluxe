@@ -36,6 +36,7 @@
 		53E9EA172430FB9B00BC1B3E /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53E9EA162430FB9B00BC1B3E /* MainViewController.swift */; };
 		53E9EA1C2430FB9D00BC1B3E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 53E9EA1B2430FB9D00BC1B3E /* Assets.xcassets */; };
 		53E9EA1F2430FB9D00BC1B3E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 53E9EA1D2430FB9D00BC1B3E /* LaunchScreen.storyboard */; };
+		53F867F92441D5C100C46C0E /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 53F867F82441D5C100C46C0E /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -70,6 +71,7 @@
 		53E9EA1B2430FB9D00BC1B3E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		53E9EA1E2430FB9D00BC1B3E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		53E9EA202430FB9D00BC1B3E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		53F867F82441D5C100C46C0E /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		E83F10BF57C640D7AE847F3E /* Pods-Storyluxe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Storyluxe.release.xcconfig"; path = "Target Support Files/Pods-Storyluxe/Pods-Storyluxe.release.xcconfig"; sourceTree = "<group>"; };
 		ED7B317AD6892F80DA280131 /* Pods_Storyluxe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Storyluxe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -206,6 +208,7 @@
 		53E9EA112430FB9B00BC1B3E /* Storyluxe */ = {
 			isa = PBXGroup;
 			children = (
+				53F867F82441D5C100C46C0E /* README.md */,
 				53E9EA122430FB9B00BC1B3E /* AppDelegate.swift */,
 				53BA03102432155200286967 /* Controller */,
 				53653AAC24323AF800F3E5FB /* Cells */,
@@ -282,6 +285,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				53F867F92441D5C100C46C0E /* README.md in Resources */,
 				53E9EA1F2430FB9D00BC1B3E /* LaunchScreen.storyboard in Resources */,
 				53653AA72432361B00F3E5FB /* help_en.rtf in Resources */,
 				53DB1C1924363FA40005E167 /* Backdrops in Resources */,

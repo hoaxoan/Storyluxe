@@ -150,13 +150,17 @@ class EditorViewController: UIViewController {
     
     // MARK: Initial buttons
     
-    func button(_ size: CGSize, _ center: CGPoint) -> UIButton {
+    func button(_ size: CGSize, _ center: CGPoint, _ index: Int) -> UIButton {
         let button = UIButton(frame: CGRect(origin: .zero, size: size))
+        button.tag = index
         button.backgroundColor = .lightGray
         button.setImage(UIImage(named: "plus-large")?.tint(color: .white), for: .normal)
         button.center = center
         button.isEnabled = true
         button.isUserInteractionEnabled = true
+        if let images = collage?.kit.images, button.tag < images.count, let image = collage?.kit.images?[button.tag] {
+            button.setImage(image.getImage(), for: .normal)
+        }
         return button
     }
     
@@ -267,12 +271,8 @@ class EditorViewController: UIViewController {
         switch collage?.kit.type {
         case .one:
             imageCenter.y -= 25
-            let button1 = button(CGSize(width: view.frame.width * 0.66, height: view.frame.height * 0.41), imageCenter)
-            button1.tag = 0
+            let button1 = button(CGSize(width: view.frame.width * 0.66, height: view.frame.height * 0.41), imageCenter, 0)
             button1.addTarget(self, action: #selector(frameSelected(_:)), for: .touchUpInside)
-            if let image = collage?.kit.images?.first {
-                button1.setImage(image.getImage(), for: .normal)
-            }
             backdropImageView.addSubview(button1)
         case .two:
             let width: CGFloat = view.frame.width * 0.50
@@ -280,25 +280,16 @@ class EditorViewController: UIViewController {
             
             imageCenter.y -= 90
             imageCenter.x -= 91
-            let button1 = button(CGSize(width: width, height: height), imageCenter)
-            button1.tag = 0
+            let button1 = button(CGSize(width: width, height: height), imageCenter, 0)
             button1.addTarget(self, action: #selector(frameSelected(_:)), for: .touchUpInside)
-            if let image = collage?.kit.images?.first {
-                button1.setImage(image.getImage(), for: .normal)
-            }
             button1.rotate(degrees: -2.5)
             backdropImageView.addSubview(button1)
             
             imageCenter = backdropImageView.center
             imageCenter.y += 50
             imageCenter.x += 92
-            let button2 = button(CGSize(width: width, height: height), imageCenter)
-            button2.tag = 1
+            let button2 = button(CGSize(width: width, height: height), imageCenter, 1)
             button2.addTarget(self, action: #selector(frameSelected(_:)), for: .touchUpInside)
-            if let images = collage?.kit.images, button2.tag < images.count {
-                let image = collage?.kit.images?[button2.tag]
-                button2.setImage(image?.getImage(), for: .normal)
-            }
             button2.rotate(degrees: 2.5)
             backdropImageView.addSubview(button2)
         case .three:
@@ -306,24 +297,21 @@ class EditorViewController: UIViewController {
             let height: CGFloat = view.frame.height * 0.235
             
             imageCenter.y -= 155
-            let button1 = button(CGSize(width: width, height: height), imageCenter)
-            button1.tag = 0
+            let button1 = button(CGSize(width: width, height: height), imageCenter, 0)
             button1.addTarget(self, action: #selector(frameSelected(_:)), for: .touchUpInside)
             button1.rotate(degrees: 5.8)
             backdropImageView.addSubview(button1)
             
             imageCenter = backdropImageView.center
             imageCenter.y += 82
-            let button2 = button(CGSize(width: width, height: height), imageCenter)
-            button2.tag = 1
+            let button2 = button(CGSize(width: width, height: height), imageCenter, 1)
             button2.addTarget(self, action: #selector(frameSelected(_:)), for: .touchUpInside)
             button2.rotate(degrees: -1.6)
             backdropImageView.addSubview(button2)
 
             imageCenter = backdropImageView.center
             imageCenter.y += 330
-            let button3 = button(CGSize(width: width, height: height), imageCenter)
-            button3.tag = 2
+            let button3 = button(CGSize(width: width, height: height), imageCenter, 2)
             button3.addTarget(self, action: #selector(frameSelected(_:)), for: .touchUpInside)
             button3.rotate(degrees: -3.5)
             backdropImageView.addSubview(button3)
@@ -336,8 +324,7 @@ class EditorViewController: UIViewController {
             imageCenter.y -= 161
             imageCenter.x += 85
 
-            let button2 = button(CGSize(width: width, height: height), imageCenter)
-            button2.tag = 1
+            let button2 = button(CGSize(width: width, height: height), imageCenter, 1)
             button2.addTarget(self, action: #selector(frameSelected(_:)), for: .touchUpInside)
             button2.rotate(degrees: -1.3)
             backdropImageView.addSubview(button2)
@@ -345,8 +332,7 @@ class EditorViewController: UIViewController {
             imageCenter = backdropImageView.center
             imageCenter.y += 135
             imageCenter.x += 103
-            let button4 = button(CGSize(width: width, height: height), imageCenter)
-            button4.tag = 3
+            let button4 = button(CGSize(width: width, height: height), imageCenter, 3)
             button4.addTarget(self, action: #selector(frameSelected(_:)), for: .touchUpInside)
             button4.rotate(degrees: -1.2)
             backdropImageView.addSubview(button4)
@@ -355,8 +341,7 @@ class EditorViewController: UIViewController {
             imageCenter = backdropImageView.center
             imageCenter.y -= 136
             imageCenter.x -= 103
-            let button1 = button(CGSize(width: width, height: height), imageCenter)
-            button1.tag = 0
+            let button1 = button(CGSize(width: width, height: height), imageCenter, 0)
             button1.addTarget(self, action: #selector(frameSelected(_:)), for: .touchUpInside)
             button1.rotate(degrees: -1.2)
             backdropImageView.addSubview(button1)
@@ -364,8 +349,7 @@ class EditorViewController: UIViewController {
             imageCenter = backdropImageView.center
             imageCenter.y += 162
             imageCenter.x -= 106
-            let button3 = button(CGSize(width: width, height: height), imageCenter)
-            button3.tag = 2
+            let button3 = button(CGSize(width: width, height: height), imageCenter, 2)
             button3.addTarget(self, action: #selector(frameSelected(_:)), for: .touchUpInside)
             button3.rotate(degrees: -1.0)
             backdropImageView.addSubview(button3)
