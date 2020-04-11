@@ -62,7 +62,7 @@ class TemplatesViewController: UIViewController, UICollectionViewDataSource, UIC
     // MARK: - UI
     
     private func updateUI() {
-        sets = Global.shared.testSets()
+        sets = Global.shared.templateSets()
         if let items = Global.shared.restore(allTemplatesKey) as [TemplateSet]?, items.count > 0 {
             sets = items
         }
@@ -294,7 +294,7 @@ class TemplatesViewController: UIViewController, UICollectionViewDataSource, UIC
         
         let alert = UIAlertController(title: set.title, message: nil, preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { action in
-            var allSets = Global.shared.testSets()
+            var allSets = Global.shared.templateSets()
             if let index = allSets.firstIndex(where: {$0.title == set.title}) {
                 allSets[index].installed = false
                 Global.shared.save(allSets, key: allTemplatesKey)

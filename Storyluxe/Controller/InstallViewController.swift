@@ -68,7 +68,7 @@ class InstallViewController: UIViewController {
     }
     
     @objc func uninstall() {
-        var allSets = Global.shared.testSets()
+        var allSets = Global.shared.templateSets()
         if let index = allSets.firstIndex(where: {$0.title == set?.title}) {
             allSets[index].installed = true
             Global.shared.save(allSets, key: allTemplatesKey)

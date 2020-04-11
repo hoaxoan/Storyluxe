@@ -132,6 +132,9 @@ class EditorViewController: UIViewController {
         
         view.tintColor = pinkTint
         view.backgroundColor = blackTint
+        
+        isModernAspect = collage?.kit.aspect == Aspect.aspect9_16
+        
         setupInitialButtons()
         setupTextEditButtons()
         containerView.addGestureRecognizer(hideScrollviewRecognizer)
@@ -227,9 +230,14 @@ class EditorViewController: UIViewController {
     // MARK: - COLLAGE
     
     func setupCollage() {
+        containerView.subviews.forEach{$0.removeFromSuperview()}
         
         // container that holds everything
-        containerView.frame = CGRect(origin: .zero, size: CGSize(width: view.frame.width - 2*left, height: 0.75*view.frame.height))
+//        containerView.frame = CGRect(origin: .zero, size: CGSize(width: view.frame.width - 2*left, height: 0.75*view.frame.height))
+        
+        containerView.frame = CGRect(origin: .zero, size: CGSize(width: view.frame.width - (2 * left), height: (isModernAspect ? 0.75 : 0.6)*view.frame.height))
+        containerView.center = view.center
+        
         containerView.layer.cornerRadius = 20
         containerView.backgroundColor = .darkGray
         containerView.layer.masksToBounds = true
@@ -254,6 +262,7 @@ class EditorViewController: UIViewController {
     }
     
     func setupPlaceholders() {
+        backdropImageView.subviews.forEach{$0.removeFromSuperview()}
         var imageCenter = backdropImageView.center
         switch collage?.kit.type {
         case .one:
@@ -450,8 +459,7 @@ class EditorViewController: UIViewController {
     }
     
     @objc func endEditing() {
-        view.endEditing(true)
-        view.subviews.forEach{ if $0 is UITextField {$0.layer.borderWidth = 0} }
+        containerView.subviews.forEach{ if $0 is UITextField {$0.layer.borderWidth = 0} }
         toggleInterface(false)
     }
     
@@ -481,18 +489,16 @@ class EditorViewController: UIViewController {
     
     @objc func aspectUpdate() {
         isModernAspect = !isModernAspect
+        collage?.kit.aspect = isModernAspect ? .aspect9_16 : .aspect4_5
         aspect.setTitle(isModernAspect ? "9:16" : "4:5", for: .normal)
         aspect.frame = CGRect(origin: CGPoint(x: 1.5*left + size.width, y: top), size: CGSize(width: 25, height: isModernAspect ? size.height : size.height*0.85))
         aspect.center = aspectCenter
         
-        containerView.frame = CGRect(origin: .zero, size: CGSize(width: view.frame.width - (2 * left), height: (isModernAspect ? 0.75 : 0.6)*view.frame.height))
-        containerView.center = view.center
-        
-        let offset = (0.15*view.frame.height)/2
-        backdropImageView.frame.origin.y = isModernAspect ? 0 : -offset
+        setupCollage()
     }
     
     @objc func close() {
+        collage?.kit.texts = texts
         dismiss(animated: true, completion: nil)
     }
     
@@ -567,7 +573,7 @@ class EditorViewController: UIViewController {
                         color: Color(hex: "#FFFFFFFF"),
                         font: Font(name: "BodoniSvtyTwoOSITCTT-Book", size: 35),
                         alignment: Alignment(state: .center),
-                        location: Location(x: 0, y: view.frame.height/2))
+                        location: Location(x: 0, y: containerView.frame.height/2))
         text.center = containerView.center
         texts.append(text)
         
@@ -578,7 +584,15 @@ class EditorViewController: UIViewController {
     
     // get current active field
     func activeField() -> UITextField? {
-        return view.subviews.first(where: {$0 is UITextField && $0.isFirstResponder}) as? UITextField
+        return containerView.subviews.first(where: {$0 is UITextField && $0.isFirstResponder}) as? UITextField
+    }
+    
+    // get selected field (with black frame)
+    func selectedField() -> UITextField? {
+        if let field = containerView.subviews.first(where: {$0.layer.borderWidth > 0}) as? UITextField, field.tag < texts.count {
+            return field
+        }
+        return nil
     }
     
     // construct a field
@@ -595,7 +609,7 @@ class EditorViewController: UIViewController {
     }
     
     func layoutTexts() {
-        view.subviews.forEach{ if $0 is UITextField {$0.removeFromSuperview()} }
+        containerView.subviews.forEach{ if $0 is UITextField {$0.removeFromSuperview()} }
         for (index, text) in texts.filter({ !$0.text.isEmpty }).enumerated() {
             let field = textField(text)
             field.sizeToFit()
@@ -625,8 +639,8 @@ class EditorViewController: UIViewController {
                 field.becomeFirstResponder()
             }
             else {
-                view.subviews.forEach{ if $0 is UITextField {$0.layer.borderWidth = 0} }
-                view.bringSubviewToFront(field)
+                containerView.subviews.forEach{ if $0 is UITextField {$0.layer.borderWidth = 0} }
+                containerView.bringSubviewToFront(field)
                 field.layer.borderColor = UIColor.black.cgColor
                 field.layer.borderWidth = 1
                 colorButton.setImage(UIImage(named: "circle")?.tint(color: getFieldColor()).resize(30), for: .normal)
@@ -662,14 +676,14 @@ class EditorViewController: UIViewController {
     // MARK: Other
     
     @objc func deleteText() {
-        if let field = view.subviews.first(where: {$0.layer.borderWidth > 0}) as? UITextField, field.tag < texts.count {
+        if let field = selectedField() {
             texts.remove(at: field.tag)
             toggleInterface(false)
         }
     }
     
     @objc func editField() {
-        if let field = view.subviews.first(where: {$0.layer.borderWidth > 0}) as? UITextField {
+        if let field = selectedField() {
             field.becomeFirstResponder()
         }
     }
@@ -694,7 +708,7 @@ class EditorViewController: UIViewController {
             
             if let object = notification?.object as? [String: Any], let color = object["color"] as? String {
                 print(#function, color)
-                if let field = view.subviews.first(where: {$0.layer.borderWidth > 0}) as? UITextField {
+                if let field = selectedField() {
                     var text = texts[field.tag]
                     text.color = Color(hex: color)
                     texts[field.tag] = text
@@ -714,7 +728,7 @@ class EditorViewController: UIViewController {
     
     func getFieldColor() -> UIColor {
         var color = UIColor.gray
-        if let field = view.subviews.first(where: {$0.layer.borderWidth > 0}) as? UITextField {
+        if let field = selectedField() {
             let text = texts[field.tag]
             color = text.color.color()
         }
@@ -799,6 +813,10 @@ class EditorViewController: UIViewController {
     
     @objc func hideEditors() {
         print(#function)
+        
+        endEditing()
+        
+        // color slider hide
         if colorSlider != nil {
             let container = colorSlider?.superview
             UIView.animate(withDuration: 0.3, animations: {
@@ -809,8 +827,8 @@ class EditorViewController: UIViewController {
             }
         }
         
+        // backdrop picker hide
         guard selectScrollView.frame.origin.y < view.bounds.height else { return }
-        
         UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn, animations: {
             self.selectScrollView.frame.origin.y = self.view.bounds.height
             self.view.setNeedsLayout()
@@ -925,7 +943,7 @@ extension EditorViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let fontName = fontNames[indexPath.row]
-        if let field = view.subviews.first(where: {$0.layer.borderWidth > 0}) as? UITextField, let size = field.font?.pointSize {
+        if let field = selectedField(), let size = field.font?.pointSize {
             var text = texts[field.tag]
             text.font = Font(name: fontName["name"]!, size: size)
             texts[field.tag] = text

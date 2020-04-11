@@ -86,7 +86,35 @@ class Global: NSObject {
         return lock
     }
     
-    // MARK: - Collages
+    // MARK: - Save / Restore
+    
+    func save<T: Encodable>(_ items: [T]?, key: String) {
+        guard let items = items else { return }
+        do {
+            let data = try PropertyListEncoder().encode(items)
+            let itemsData = try NSKeyedArchiver.archivedData(withRootObject: data, requiringSecureCoding: false)
+            UserDefaults.standard.set(itemsData, forKey: key)
+        } catch {
+            print("⚠️ save items failed = \(error.localizedDescription)")
+        }
+    }
+    
+    func restore<T: Decodable>(_ key: String) -> [T]? {
+        
+        if let data = UserDefaults.standard.data(forKey: key) {
+            do {
+                let itemsData = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? Data
+                let items = try PropertyListDecoder().decode([T].self, from: itemsData!)
+                return items
+            } catch {
+                print("⚠️ restore items failed = \(error.localizedDescription)")
+                return nil
+            }
+        }
+        return nil
+    }
+    
+    // MARK: - Save / Restore
     
     func testCollages() -> [Collage] {
         return [Collage(id: UUID().uuidString,
@@ -115,33 +143,7 @@ class Global: NSObject {
                                    aspect: .aspect9_16, canChangeBorder: false))]
     }
     
-    func save<T: Encodable>(_ items: [T]?, key: String) {
-        guard let items = items else { return }
-        do {
-            let data = try PropertyListEncoder().encode(items)
-            let itemsData = try NSKeyedArchiver.archivedData(withRootObject: data, requiringSecureCoding: false)
-            UserDefaults.standard.set(itemsData, forKey: key)
-        } catch {
-            print("⚠️ save items failed = \(error.localizedDescription)")
-        }
-    }
-    
-    func restore<T: Decodable>(_ key: String) -> [T]? {
-        
-        if let data = UserDefaults.standard.data(forKey: key) {
-            do {
-                let itemsData = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? Data
-                let items = try PropertyListDecoder().decode([T].self, from: itemsData!)
-                return items
-            } catch {
-                print("⚠️ restore items failed = \(error.localizedDescription)")
-                return nil
-            }
-        }
-        return nil
-    }
-    
-    func testSets() -> [TemplateSet] {
+    func templateSets() -> [TemplateSet] {
         let set1 = [Template(filename: "instant_1f", isPremium: false, type: .one, collage: testCollages()[0]),
                     Template(filename: "instant_2f", isPremium: false, type: .two, collage: testCollages()[1]),
                     Template(filename: "instant_3f", isPremium: false, type: .three, collage: testCollages()[2]),
