@@ -113,6 +113,20 @@ class SettingsTableViewController: UITableViewController {
                 present(purchaseVC, animated: true, completion: nil)
             }
         }
+        
+        if indexPath.section == 1 && indexPath.row < 4 {
+            guard let url = URL(string: "https://stackoverflow.com") else { return }
+            UIApplication.shared.open(url)
+        }
+        
+        if indexPath.section == 1 && indexPath.row >= 4 {
+            let textVC = RTFViewController()
+            present(textVC, animated: true, completion: nil)
+        }
+        
+        if indexPath.section == tableView.numberOfSections - 1 {
+            emailSupport()
+        }
     }
 }
 
