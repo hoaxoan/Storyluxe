@@ -3,11 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 55;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0BCE5C2E520ABBD9ABB428EC /* Pods_Storyluxe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED7B317AD6892F80DA280131 /* Pods_Storyluxe.framework */; };
+		2BB6AF3F15698FA1B9C4904A /* Pods_Storyluxe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 228828B6B73F1ACA89F0FF17 /* Pods_Storyluxe.framework */; };
 		531F4D482434B3E000B8FA04 /* Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531F4D472434B3E000B8FA04 /* Text.swift */; };
 		531F4D4A2434B42500B8FA04 /* Kit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531F4D492434B42500B8FA04 /* Kit.swift */; };
 		531F4D4C2434BCB700B8FA04 /* Template.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531F4D4B2434BCB700B8FA04 /* Template.swift */; };
@@ -27,6 +27,8 @@
 		537DC5682434E56600FFD3C7 /* PurchaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 537DC5672434E56600FFD3C7 /* PurchaseViewController.swift */; };
 		53BA030F24320D7700286967 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BA030E24320D7700286967 /* Global.swift */; };
 		53BA0314243216C600286967 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BA0313243216C600286967 /* SettingsTableViewController.swift */; };
+		53C5F37C29DDD6BF005E12A2 /* SwiftyStoreKit in Frameworks */ = {isa = PBXBuildFile; productRef = 53C5F37B29DDD6BF005E12A2 /* SwiftyStoreKit */; };
+		53C5F37F29DDD81A005E12A2 /* BRYXBanner in Frameworks */ = {isa = PBXBuildFile; productRef = 53C5F37E29DDD81A005E12A2 /* BRYXBanner */; };
 		53D7A2F524327B52006013C1 /* EditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D7A2F424327B52006013C1 /* EditorViewController.swift */; };
 		53DB1C142435E4F90005E167 /* InstallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53DB1C132435E4F90005E167 /* InstallViewController.swift */; };
 		53DB1C16243628290005E167 /* Backdrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53DB1C15243628290005E167 /* Backdrop.swift */; };
@@ -40,7 +42,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		4E7766E0D035F12EE4666371 /* Pods-Storyluxe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Storyluxe.debug.xcconfig"; path = "Target Support Files/Pods-Storyluxe/Pods-Storyluxe.debug.xcconfig"; sourceTree = "<group>"; };
+		228828B6B73F1ACA89F0FF17 /* Pods_Storyluxe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Storyluxe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3D4AEBC543C280FB0D66867D /* Pods-Storyluxe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Storyluxe.release.xcconfig"; path = "Target Support Files/Pods-Storyluxe/Pods-Storyluxe.release.xcconfig"; sourceTree = "<group>"; };
 		531F4D472434B3E000B8FA04 /* Text.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Text.swift; sourceTree = "<group>"; };
 		531F4D492434B42500B8FA04 /* Kit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Kit.swift; sourceTree = "<group>"; };
 		531F4D4B2434BCB700B8FA04 /* Template.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Template.swift; sourceTree = "<group>"; };
@@ -72,8 +75,7 @@
 		53E9EA1E2430FB9D00BC1B3E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		53E9EA202430FB9D00BC1B3E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		53F867F82441D5C100C46C0E /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
-		E83F10BF57C640D7AE847F3E /* Pods-Storyluxe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Storyluxe.release.xcconfig"; path = "Target Support Files/Pods-Storyluxe/Pods-Storyluxe.release.xcconfig"; sourceTree = "<group>"; };
-		ED7B317AD6892F80DA280131 /* Pods_Storyluxe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Storyluxe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A0984E56A7EB0D4D347387E5 /* Pods-Storyluxe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Storyluxe.debug.xcconfig"; path = "Target Support Files/Pods-Storyluxe/Pods-Storyluxe.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,26 +83,19 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0BCE5C2E520ABBD9ABB428EC /* Pods_Storyluxe.framework in Frameworks */,
+				2BB6AF3F15698FA1B9C4904A /* Pods_Storyluxe.framework in Frameworks */,
+				53C5F37C29DDD6BF005E12A2 /* SwiftyStoreKit in Frameworks */,
+				53C5F37F29DDD81A005E12A2 /* BRYXBanner in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		02C4C1436BA124722DD4E4FA /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				4E7766E0D035F12EE4666371 /* Pods-Storyluxe.debug.xcconfig */,
-				E83F10BF57C640D7AE847F3E /* Pods-Storyluxe.release.xcconfig */,
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
 		117EC50C7B5A9C2EB89B0421 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				ED7B317AD6892F80DA280131 /* Pods_Storyluxe.framework */,
+				228828B6B73F1ACA89F0FF17 /* Pods_Storyluxe.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -192,8 +187,8 @@
 			children = (
 				53E9EA112430FB9B00BC1B3E /* Storyluxe */,
 				53E9EA102430FB9B00BC1B3E /* Products */,
-				02C4C1436BA124722DD4E4FA /* Pods */,
 				117EC50C7B5A9C2EB89B0421 /* Frameworks */,
+				AB262095EA6794E832EC820D /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -224,6 +219,15 @@
 			path = Storyluxe;
 			sourceTree = "<group>";
 		};
+		AB262095EA6794E832EC820D /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				A0984E56A7EB0D4D347387E5 /* Pods-Storyluxe.debug.xcconfig */,
+				3D4AEBC543C280FB0D66867D /* Pods-Storyluxe.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -231,18 +235,22 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 53E9EA232430FB9D00BC1B3E /* Build configuration list for PBXNativeTarget "Storyluxe" */;
 			buildPhases = (
-				0279176146B0AF06A9F1F434 /* [CP] Check Pods Manifest.lock */,
+				129A9FC3F93855AD5E889923 /* [CP] Check Pods Manifest.lock */,
+				7594D8C501FE088155F9E97C /* [CP] Embed Pods Frameworks */,
 				53E9EA0B2430FB9B00BC1B3E /* Sources */,
 				53E9EA0C2430FB9B00BC1B3E /* Frameworks */,
 				53E9EA0D2430FB9B00BC1B3E /* Resources */,
-				53E678602431F9F900E195AE /* ShellScript */,
-				AD28F7615EFD67A5D4250C60 /* [CP] Embed Pods Frameworks */,
+				53E678602431F9F900E195AE /* Build counter */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = Storyluxe;
+			packageProductDependencies = (
+				53C5F37B29DDD6BF005E12A2 /* SwiftyStoreKit */,
+				53C5F37E29DDD81A005E12A2 /* BRYXBanner */,
+			);
 			productName = Storyluxe;
 			productReference = 53E9EA0F2430FB9B00BC1B3E /* Storyluxe.app */;
 			productType = "com.apple.product-type.application";
@@ -253,8 +261,9 @@
 		53E9EA072430FB9B00BC1B3E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1140;
-				LastUpgradeCheck = 1140;
+				LastUpgradeCheck = 1430;
 				ORGANIZATIONNAME = "Sergey Koval";
 				TargetAttributes = {
 					53E9EA0E2430FB9B00BC1B3E = {
@@ -263,7 +272,7 @@
 				};
 			};
 			buildConfigurationList = 53E9EA0A2430FB9B00BC1B3E /* Build configuration list for PBXProject "Storyluxe" */;
-			compatibilityVersion = "Xcode 9.3";
+			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -271,6 +280,10 @@
 				Base,
 			);
 			mainGroup = 53E9EA062430FB9B00BC1B3E;
+			packageReferences = (
+				53C5F37A29DDD6BF005E12A2 /* XCRemoteSwiftPackageReference "SwiftyStoreKit" */,
+				53C5F37D29DDD81A005E12A2 /* XCRemoteSwiftPackageReference "BRYXBanner" */,
+			);
 			productRefGroup = 53E9EA102430FB9B00BC1B3E /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -297,7 +310,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0279176146B0AF06A9F1F434 /* [CP] Check Pods Manifest.lock */ = {
+		129A9FC3F93855AD5E889923 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -319,8 +332,9 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		53E678602431F9F900E195AE /* ShellScript */ = {
+		53E678602431F9F900E195AE /* Build counter */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -328,6 +342,7 @@
 			);
 			inputPaths = (
 			);
+			name = "Build counter";
 			outputFileListPaths = (
 			);
 			outputPaths = (
@@ -336,7 +351,7 @@
 			shellPath = /bin/sh;
 			shellScript = "#!/bin/bash\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"$INFOPLIST_FILE\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"$INFOPLIST_FILE\"\n\n\n";
 		};
-		AD28F7615EFD67A5D4250C60 /* [CP] Embed Pods Frameworks */ = {
+		7594D8C501FE088155F9E97C /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -403,7 +418,6 @@
 		53E9EA212430FB9D00BC1B3E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -426,6 +440,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -463,7 +478,6 @@
 		53E9EA222430FB9D00BC1B3E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -486,6 +500,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -516,17 +531,19 @@
 		};
 		53E9EA242430FB9D00BC1B3E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4E7766E0D035F12EE4666371 /* Pods-Storyluxe.debug.xcconfig */;
+			baseConfigurationReference = A0984E56A7EB0D4D347387E5 /* Pods-Storyluxe.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = NGGLF95RDQ;
 				INFOPLIST_FILE = Storyluxe/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.kovallux.Storyluxe;
 				PRODUCT_NAME = Storyluxe;
 				SWIFT_VERSION = 5.0;
@@ -536,17 +553,19 @@
 		};
 		53E9EA252430FB9D00BC1B3E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E83F10BF57C640D7AE847F3E /* Pods-Storyluxe.release.xcconfig */;
+			baseConfigurationReference = 3D4AEBC543C280FB0D66867D /* Pods-Storyluxe.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = NGGLF95RDQ;
 				INFOPLIST_FILE = Storyluxe/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.kovallux.Storyluxe;
 				PRODUCT_NAME = Storyluxe;
 				SWIFT_VERSION = 5.0;
@@ -576,6 +595,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		53C5F37A29DDD6BF005E12A2 /* XCRemoteSwiftPackageReference "SwiftyStoreKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/bizz84/SwiftyStoreKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.16.4;
+			};
+		};
+		53C5F37D29DDD81A005E12A2 /* XCRemoteSwiftPackageReference "BRYXBanner" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/bryx-inc/BRYXBanner.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.8.5;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		53C5F37B29DDD6BF005E12A2 /* SwiftyStoreKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 53C5F37A29DDD6BF005E12A2 /* XCRemoteSwiftPackageReference "SwiftyStoreKit" */;
+			productName = SwiftyStoreKit;
+		};
+		53C5F37E29DDD81A005E12A2 /* BRYXBanner */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 53C5F37D29DDD81A005E12A2 /* XCRemoteSwiftPackageReference "BRYXBanner" */;
+			productName = BRYXBanner;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 53E9EA072430FB9B00BC1B3E /* Project object */;
 }

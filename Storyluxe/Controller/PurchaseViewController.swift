@@ -168,6 +168,8 @@ class PurchaseViewController: UIViewController {
                 case .cloudServiceRevoked: print("User has revoked permission to use this cloud service")
                 default: print((error as NSError).localizedDescription)
                 }
+            case .deferred(purchase: let purchaseDetails):
+                print("Purchase Deferred: \(purchaseDetails)")
             }
         }
     }

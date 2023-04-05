@@ -1,8 +1,8 @@
-platform :ios, '12.0'
+platform :ios, '13.4'
 use_frameworks!
 
 target 'Storyluxe' do
-    pod 'BRYXBanner'
+#    pod 'BRYXBanner'
     pod 'ColorSlider'
-    pod 'SwiftyStoreKit'
+#    pod 'SwiftyStoreKit'
 end

@@ -207,7 +207,6 @@ class TemplatesViewController: UIViewController, UICollectionViewDataSource, UIC
     }
     
     @objc func selectedTemplateSubset(_ sender: UIButton) {
-        let index = CGFloat(sender.tag)
         sender.setTitleColor(pinkTint, for: .normal)
         if previousSubButton != nil && previousSubButton?.tag != sender.tag {
             previousSubButton!.setTitleColor(.lightGray, for: .normal)

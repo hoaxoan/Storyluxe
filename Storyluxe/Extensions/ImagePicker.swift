@@ -11,7 +11,7 @@ import UIKit
 import AVFoundation
 import Photos
 
-protocol ImagePickerDelegate: class {
+protocol ImagePickerDelegate: AnyObject {
     func imagePickerDelegate(canUseCamera accessIsAllowed: Bool, delegatedForm: ImagePicker)
     func imagePickerDelegate(canUseGallery accessIsAllowed: Bool, delegatedForm: ImagePicker)
     func imagePickerDelegate(didSelect image: UIImage, delegatedForm: ImagePicker)

@@ -1,24 +1,16 @@
 PODS:
-  - BRYXBanner (0.8.4)
   - ColorSlider (4.4)
-  - SwiftyStoreKit (0.15.0)
 
 DEPENDENCIES:
-  - BRYXBanner
   - ColorSlider
-  - SwiftyStoreKit
 
 SPEC REPOS:
   trunk:
-    - BRYXBanner
     - ColorSlider
-    - SwiftyStoreKit
 
 SPEC CHECKSUMS:
-  BRYXBanner: 4fbd266f96ce000e4c6cc9a0558c446bd88d9801
   ColorSlider: 9a888e65b871fa1e6a26fadebf4931c949935681
-  SwiftyStoreKit: 033d06b6f87955405d3f844a18a7687c2438592a
 
-PODFILE CHECKSUM: 5400215213038525306e7b090d86ee1943c5e4be
+PODFILE CHECKSUM: e837a95c0712ff9bcfbc233189af6b4c7a60fd8f
 
-COCOAPODS: 1.9.1
+COCOAPODS: 1.11.3
